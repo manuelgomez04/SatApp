@@ -1,0 +1,20 @@
+2025-01-29 18:42:20.994317+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "USUARIOS" no encontrada
+Table "USUARIOS" not found; SQL statement:
+INSERT INTO usuarios (id, nombre, username, password, email, role) [42102-232]
+2025-01-29 18:42:20.998824+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "VALUES[*]"; se esperaba "ROW (, (, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"
+Syntax error in SQL statement "VALUES[*]"; expected "ROW (, (, INTERSECTS (, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+VALUES [42001-232]
+2025-01-29 18:42:20.999829+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "([*]nextval('usuario_seq'), 'Juan PÃ©rez', 'juanperez', 'password123', 'juan.perez@example.com', 'USER'),"; se esperaba "(, SELECT, TABLE, VALUES"
+Syntax error in SQL statement "([*]nextval('usuario_seq'), 'Juan PÃ©rez', 'juanperez', 'password123', 'juan.perez@example.com', 'USER'),"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(nextval('usuario_seq'), 'Juan PÃ©rez', 'juanperez', 'password123', 'juan.perez@example.com', 'USER'), [42001-232]
+2025-01-29 18:42:21.003834+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "([*]nextval('usuario_seq'), 'MarÃ\00ada LÃ³pez', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN')"; se esperaba "(, SELECT, TABLE, VALUES"
+Syntax error in SQL statement "([*]nextval('usuario_seq'), 'MarÃ\00ada LÃ³pez', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN')"; expected "(, SELECT, TABLE, VALUES"; SQL statement:
+(nextval('usuario_seq'), 'MarÃ­a LÃ³pez', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN') [42001-232]
+2025-01-29 18:43:13.339699+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "USUARIOS" no encontrada
+Table "USUARIOS" not found; SQL statement:
+INSERT INTO usuarios (id, nombre, username, password, email, role) VALUES     (nextval('usuario_seq'), 'Juan PÃ©rez', 'juanperez', 'password123', 'juan.perez@example.com', 'USER'),     (nextval('usuario_seq'), 'MarÃ­a LÃ³pez', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN') [42102-232]
