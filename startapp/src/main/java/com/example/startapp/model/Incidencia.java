@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class Incidencia {
     @GeneratedValue
     private Long id;
 
-    private LocalDateTime fecha;
+    private LocalDate fecha;
     private String titulo;
     private String descripcion;
 

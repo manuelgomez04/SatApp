@@ -1,7 +1,10 @@
 package com.example.startapp.service;
 
+import com.example.startapp.dto.EditNotaDto;
+import com.example.startapp.dto.GetNotaDto;
 import com.example.startapp.model.Incidencia;
 import com.example.startapp.model.Nota;
+import com.example.startapp.model.NotaPk;
 import com.example.startapp.repo.IncidenciaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -19,44 +22,37 @@ public class NotaService {
     private final IncidenciaRepository incidenciaRepository;
 
     public List<Nota> findAll() {
-/*
-        List<Incidencia> listado = incidenciaRepository.findAll();
 
-        List<Nota> results = new ArrayList<>();
+        List<Nota> notas = incidenciaRepository.findAllNotas();
 
-        for (Incidencia incidencia : listado) {
-            List<Nota> notas = incidencia.getNotas();
-
-            if (notas.isEmpty()) {
-                throw new EntityNotFoundException("No se han encontrado notas");
-            }
-
-            results.addAll(notas);
+        if (notas.isEmpty()) {
+            throw new EntityNotFoundException("No se han encontrado notas");
         }
-        return results;
 
-*/
-
-        return incidenciaRepository.findAllNotas();
+        return notas;
     }
 
+    public Nota findNotaById(Long id) {
+        return incidenciaRepository.findByIdNota(id).orElseThrow(() -> new EntityNotFoundException("No se ha encontrado una nota con ese id"));
+    }
+
+    //Se puede mejorar(DTO)
+    public void save(Long incidenciaId, Nota nota) {
     /*
-    public Nota findById(Long id) {
-        List<Incidencia> listado = incidenciaRepository.findAll();
-        Optional<Nota> encontrado = Optional.ofNullable(null);
+        Incidencia incidencia = incidenciaRepository.findById(incidenciaId).get();
 
-        for (Incidencia incidencia : listado) {
+        incidencia.addNota(nota);
 
-            List<Nota> notas = incidencia.getNotas();
+    */
 
-            for (Nota nota : notas) {
 
-                if (nota.getId() == id) {
-                    encontrado.get() = nota;
-                }
-            }
-        }
-        return encontrado.get();
     }
-     */
+
+    public void remove(Long notaId, Long incidenciaId) {
+        Incidencia incidencia = incidenciaRepository.findById(incidenciaId)
+                .orElseThrow(() -> new EntityNotFoundException("Incidencia no encontrada con el id " + incidenciaId));
+        incidencia.removeNota(findNotaById(notaId));
+    }
+
+
 }

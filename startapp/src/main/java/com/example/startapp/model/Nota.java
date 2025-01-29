@@ -22,7 +22,7 @@ public class Nota {
     @GeneratedValue
     private Long id;
 
-    private LocalDateTime fecha;
+    private LocalDate fecha;
     private String contenido;
     private String autor;
 
