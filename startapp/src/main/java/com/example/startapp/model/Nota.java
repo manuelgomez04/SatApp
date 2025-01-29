@@ -4,56 +4,31 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
 @Builder
-public class Incidencia {
+@ToString
+@IdClass(NotaPk.class)
+public class Nota {
 
     @Id
     @GeneratedValue
     private Long id;
 
     private LocalDateTime fecha;
-    private String titulo;
-    private String descripcion;
+    private String contenido;
+    private String autor;
 
-    @Enumerated(EnumType.STRING)
-    private Estado estado;
-    private Boolean urgencia;
-
-    /*
-    Nota, ubicacion,equipo, categoria, usuario, tecnico
-     */
-
-    //Asociacion nota
-    @ToString.Exclude
-    @Builder.Default
-    @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "incidencia",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            orphanRemoval = true)
-    private List<Nota> notas = new ArrayList<>();
-
-    //Helpers nota
-
-    public void addNota(Nota nota){
-        notas.add(nota);
-        nota.setIncidencia(this);
-    }
-
-    public void removeNota(Nota nota){
-        notas.remove(nota);
-    }
+    @Id
+    @ManyToOne
+    private Incidencia incidencia;
 
     @Override
     public final boolean equals(Object o) {
@@ -62,8 +37,8 @@ public class Incidencia {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Incidencia that = (Incidencia) o;
-        return getId() != null && Objects.equals(getId(), that.getId());
+        Nota nota = (Nota) o;
+        return getId() != null && Objects.equals(getId(), nota.getId());
     }
 
     @Override

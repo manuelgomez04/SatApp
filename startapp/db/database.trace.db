@@ -1,0 +1,74 @@
+2025-01-29 13:52:36.490291+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]inser into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(1,'1943-02-10','AA','AAAAAAA','ABIERTA',true)"; se esperaba "INSERT"
+Syntax error in SQL statement "[*]inser into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(1,'1943-02-10','AA','AAAAAAA','ABIERTA',true)"; expected "INSERT"; SQL statement:
+inser into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(1,'1943-02-10','AA','AAAAAAA','ABIERTA',true) [42001-232]
+2025-01-29 13:52:36.497282+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]inser into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1)"; se esperaba "INSERT"
+Syntax error in SQL statement "[*]inser into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1)"; expected "INSERT"; SQL statement:
+inser into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1) [42001-232]
+2025-01-29 13:54:27.340104+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]inser into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(1,'1943-02-10','AA','AAAAAAA','ABIERTA',true)"; se esperaba "INSERT"
+Syntax error in SQL statement "[*]inser into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(1,'1943-02-10','AA','AAAAAAA','ABIERTA',true)"; expected "INSERT"; SQL statement:
+inser into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(1,'1943-02-10','AA','AAAAAAA','ABIERTA',true) [42001-232]
+2025-01-29 13:54:27.348075+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]inser into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1)"; se esperaba "INSERT"
+Syntax error in SQL statement "[*]inser into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1)"; expected "INSERT"; SQL statement:
+inser into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1) [42001-232]
+2025-01-29 13:54:37.999653+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: La cantidad de columnas no coincide
+Column count does not match; SQL statement:
+insert into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1) [21002-232]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.command.dml.Insert.doPrepare(Insert.java:294)
+	at org.h2.command.dml.DataChangeStatement.prepare(DataChangeStatement.java:37)
+	at org.h2.command.Parser.prepareCommand(Parser.java:489)
+	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:645)
+	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:561)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1164)
+	at org.h2.jdbc.JdbcStatement.executeInternal(JdbcStatement.java:245)
+	at org.h2.jdbc.JdbcStatement.execute(JdbcStatement.java:231)
+	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94)
+	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java)
+	at org.hibernate.tool.schema.internal.exec.GenerationTargetToDatabase.accept(GenerationTargetToDatabase.java:80)
+	at org.hibernate.tool.schema.internal.Helper.applySqlString(Helper.java:233)
+	at org.hibernate.tool.schema.internal.Helper.applyScript(Helper.java:255)
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applyImportFiles(SchemaCreatorImpl.java:676)
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.applyImportSources(SchemaCreatorImpl.java:595)
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.performCreation(SchemaCreatorImpl.java:184)
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:142)
+	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:118)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:250)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:324)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:463)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1506)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:66)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:390)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:419)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:400)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:366)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1859)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:307)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350)
+	at com.example.startapp.StartappApplication.main(StartappApplication.java:10)
