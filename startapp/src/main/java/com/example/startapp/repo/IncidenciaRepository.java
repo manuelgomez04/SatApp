@@ -20,7 +20,7 @@ public interface IncidenciaRepository extends JpaRepository<Incidencia, Long> {
 
     @Query("""
             select n
-            from Incidencia i join i.notas n
+            from Nota n
             where n.id = ?1
             """)
     Optional<Nota> findByIdNota(Long id);

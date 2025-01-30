@@ -1,5 +1,6 @@
 package com.example.startapp.controller;
 
+import com.example.startapp.dto.EditNotaDto;
 import com.example.startapp.dto.GetNotaDto;
 import com.example.startapp.model.Nota;
 import com.example.startapp.service.NotaService;
@@ -25,6 +26,11 @@ public class NotasController {
     @GetMapping("/{id}")
     public GetNotaDto getNotaById(@PathVariable Long id){
         return GetNotaDto.of(notaService.findNotaById(id));
+    }
+
+    @PostMapping("/{id}")
+    public void saveNota(@PathVariable Long incidenciaId, @RequestBody EditNotaDto nota){
+        notaService.save(incidenciaId,nota);
     }
 
     @DeleteMapping("/{notaId}/{incidenciaId}")

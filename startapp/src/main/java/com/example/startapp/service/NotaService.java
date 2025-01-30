@@ -7,6 +7,7 @@ import com.example.startapp.model.Nota;
 import com.example.startapp.model.NotaPk;
 import com.example.startapp.repo.IncidenciaRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
@@ -37,17 +38,16 @@ public class NotaService {
     }
 
     //Se puede mejorar(DTO)
-    public void save(Long incidenciaId, Nota nota) {
-    /*
+    public void save(Long incidenciaId, EditNotaDto nota) {
+
         Incidencia incidencia = incidenciaRepository.findById(incidenciaId).get();
 
         incidencia.addNota(nota);
 
-    */
-
 
     }
 
+    @Transactional
     public void remove(Long notaId, Long incidenciaId) {
         Incidencia incidencia = incidenciaRepository.findById(incidenciaId)
                 .orElseThrow(() -> new EntityNotFoundException("Incidencia no encontrada con el id " + incidenciaId));
