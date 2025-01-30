@@ -1,14 +1,10 @@
 package com.example.startapp.dto;
 
-import com.example.startapp.model.Usuario;
-
-public record EditUsuarioDTO(
+public record EditPersonalDto(
         String nombre,
         String username,
         String email,
         String password,
         String role
 ) {
-
-
 }

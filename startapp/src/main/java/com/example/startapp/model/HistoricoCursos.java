@@ -9,12 +9,15 @@ import lombok.*;
 @Setter
 @ToString
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 public class HistoricoCursos {
 
     @Id
     @GeneratedValue
-    private Long cursoEscolar;
+    private Long id;
+
+    private String cursoEscolar;
 
     private String curso;
 

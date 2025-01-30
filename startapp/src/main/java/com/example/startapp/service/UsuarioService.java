@@ -1,6 +1,6 @@
 package com.example.startapp.service;
 
-import com.example.startapp.dto.EditUsuarioDTO;
+import com.example.startapp.dto.EditUsuarioDto;
 import com.example.startapp.model.Usuario;
 import com.example.startapp.repo.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -33,7 +33,7 @@ public class UsuarioService {
         return result;
     }
 
-    public Usuario saveUsuario(EditUsuarioDTO nuevoUsuario) {
+    public Usuario saveUsuario(EditUsuarioDto nuevoUsuario) {
 
 
         return usuarioRepository.save(Usuario.builder()
@@ -45,20 +45,7 @@ public class UsuarioService {
                 .build());
     }
 
-    public Usuario updateUsuario(Long id, EditUsuarioDTO editUsuarioDTO) {
-        return usuarioRepository.findById(id).map(old -> {
-            old.setNombre(editUsuarioDTO.nombre());
-            old.setEmail(editUsuarioDTO.email());
-            old.setRole(editUsuarioDTO.role());
-            old.setPassword(editUsuarioDTO.password());
-            old.setUsername(editUsuarioDTO.username());
-            return usuarioRepository.save(old);
-        }).orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
-    }
 
-    public void deleteUsuario(Long id) {
-        usuarioRepository.deleteById(id);
-    }
 
 
 }

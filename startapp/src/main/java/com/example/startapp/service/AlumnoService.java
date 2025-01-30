@@ -1,12 +1,14 @@
 package com.example.startapp.service;
 
 import com.example.startapp.dto.EditAlumnoDto;
-import com.example.startapp.dto.EditUsuarioDTO;
+import com.example.startapp.dto.EditHistoricoDto;
 import com.example.startapp.model.Alumno;
+import com.example.startapp.model.HistoricoCursos;
 import com.example.startapp.repo.AlumnoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,8 +19,9 @@ public class AlumnoService {
     private final AlumnoRepository alumnoRepository;
 
 
+    @Transactional
     public List<Alumno> getAllAlumnos() {
-        List<Alumno> result = alumnoRepository.findAll();
+        List<Alumno> result = alumnoRepository.findAllHis();
 
         if (result.isEmpty()) {
             throw new EntityNotFoundException("No se encontraron alumnos");
@@ -29,7 +32,7 @@ public class AlumnoService {
 
     public Alumno getAlumnoById(Long id) {
         Alumno result = alumnoRepository
-                .findById(id)
+                .findByIdHis(id)
                 .orElseThrow(() -> new EntityNotFoundException("Alumno no encontrado"));
         return result;
     }
@@ -45,5 +48,17 @@ public class AlumnoService {
                 .build());
     }
 
+
+    public HistoricoCursos saveHistoricoCurso(Long alumnoId, EditHistoricoDto editHistoricoDto) {
+        Alumno alumno = getAlumnoById(alumnoId);
+        HistoricoCursos historicoCursos = HistoricoCursos.builder()
+                .curso(editHistoricoDto.curso())
+                .cursoEscolar(editHistoricoDto.cursoEscolar())
+                .alumno(alumno)
+                .build();
+        alumno.getHistoricoCursos().add(historicoCursos);
+        alumnoRepository.save(alumno);
+        return historicoCursos;
+    }
 
 }

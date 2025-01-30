@@ -12,7 +12,7 @@ public record GetAlumnoDto(
         String email,
         String password,
         String role,
-        List<HistoricoCursos> historicoCursos
+        List<GetHistoricoDto> historicoCursos
 ) {
     public static GetAlumnoDto of(Alumno alumno){
         return new GetAlumnoDto(
@@ -21,7 +21,7 @@ public record GetAlumnoDto(
                 alumno.getEmail(),
                 alumno.getPassword(),
                 alumno.getRole(),
-                alumno.getHistoricoCursos()
+                alumno.getHistoricoCursos().stream().map(GetHistoricoDto::of).toList()
 
         );
     }
