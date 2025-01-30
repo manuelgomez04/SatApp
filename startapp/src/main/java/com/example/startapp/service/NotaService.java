@@ -1,20 +1,15 @@
 package com.example.startapp.service;
 
 import com.example.startapp.dto.EditNotaDto;
-import com.example.startapp.dto.GetNotaDto;
 import com.example.startapp.model.Incidencia;
 import com.example.startapp.model.Nota;
-import com.example.startapp.model.NotaPk;
 import com.example.startapp.repo.IncidenciaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -37,21 +32,49 @@ public class NotaService {
         return incidenciaRepository.findByIdNota(id).orElseThrow(() -> new EntityNotFoundException("No se ha encontrado una nota con ese id"));
     }
 
-    //Se puede mejorar(DTO)
-    public void save(Long incidenciaId, EditNotaDto nota) {
+    @Transactional
+    public Nota saveNota(Long incidenciaId, EditNotaDto nuevo) {
 
-        Incidencia incidencia = incidenciaRepository.findById(incidenciaId).get();
+        Incidencia incidencia = incidenciaRepository.findById(incidenciaId)
+                .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado la incidencia"));
+
+        Nota nota = Nota.builder()
+                .fecha(nuevo.fecha())
+                .contenido(nuevo.contenido())
+                .autor(nuevo.autor())
+                .incidencia(incidencia)
+                .build();
 
         incidencia.addNota(nota);
 
+        incidenciaRepository.save(incidencia);
 
+        return nota;
     }
 
+
     @Transactional
-    public void remove(Long notaId, Long incidenciaId) {
+    public Nota editNota(Long notaId, EditNotaDto nuevo) {
+
+        Nota nota = incidenciaRepository.findByIdNota(notaId)
+                .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado la nota"));
+
+        nota.setAutor(nuevo.autor());
+        nota.setFecha(nuevo.fecha());
+        nota.setContenido(nuevo.contenido());
+
+        incidenciaRepository.save(nota.getIncidencia());
+
+        return nota;
+    }
+
+
+    @Transactional
+    public void removeNota(Long notaId, Long incidenciaId) {
         Incidencia incidencia = incidenciaRepository.findById(incidenciaId)
                 .orElseThrow(() -> new EntityNotFoundException("Incidencia no encontrada con el id " + incidenciaId));
         incidencia.removeNota(findNotaById(notaId));
+        incidenciaRepository.save(incidencia);
     }
 
 
