@@ -44,20 +44,6 @@ public class TecnicoService {
                 .build());
     }
 
-    public Tecnico updateTecnico(Long id, EditTecnicoDto editTecnicoDto) {
-        return tecnicoRepository.findById(id).map(old -> {
-            old.setNombre(editTecnicoDto.nombre());
-            old.setEmail(editTecnicoDto.email());
-            old.setRole(editTecnicoDto.role());
-            old.setPassword(editTecnicoDto.password());
-            old.setUsername(editTecnicoDto.username());
-            return tecnicoRepository.save(old);
-        }).orElseThrow(() -> new EntityNotFoundException("Tecnico no encontrado"));
-    }
-
-    public void deleteTecnico(Long id) {
-        tecnicoRepository.deleteById(id);
-    }
 
 
 }

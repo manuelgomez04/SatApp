@@ -1,10 +1,7 @@
 package com.example.startapp.controller;
 
-import com.example.startapp.dto.EditAlumnoDto;
 import com.example.startapp.dto.EditUsuarioDTO;
-import com.example.startapp.dto.GetAlumnoDto;
 import com.example.startapp.dto.GetUsuarioDto;
-import com.example.startapp.model.Alumno;
 import com.example.startapp.model.Usuario;
 import com.example.startapp.service.AlumnoService;
 import com.example.startapp.service.UsuarioService;
@@ -33,6 +30,8 @@ public class UsuarioController {
         Usuario usuario = usuarioService.saveUsuario(nuevoUsuario);
         return GetUsuarioDto.of(usuario);
     }
+
+
 
 
 
