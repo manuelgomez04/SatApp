@@ -4,6 +4,9 @@ package com.example.startapp.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.Where;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
@@ -16,6 +19,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@SQLDelete(sql = "UPDATE usuario SET deleted = true WHERE id = ?")
+@SQLRestriction("deleted = false")
 public class Usuario {
 
     @Id
@@ -28,7 +33,7 @@ public class Usuario {
     private String password;
     private String email;
     private String role;
-
+    private boolean deleted = Boolean.FALSE;
 
 
     @Override
