@@ -75,6 +75,19 @@ public class AlumnoController {
         return GetAlumnoDto.of(alumno);
     }
 
+    @Operation(summary = "Crea un nuevo historico de curso para un alumno")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Se ha creado el historico de curso",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetAlumnoDto.class)),
+                            examples = {@ExampleObject(
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "400",
+                    description = "No se ha creado un historico de curso",
+                    content = @Content),
+    })
     @PostMapping("/{alumnoId}/historico")
     public GetHistoricoDto saveHistoricoCurso(@PathVariable Long alumnoId, @RequestBody EditHistoricoDto historicoDto){
         HistoricoCursos historicoCursos = alumnoService.saveHistoricoCurso(alumnoId, historicoDto);
