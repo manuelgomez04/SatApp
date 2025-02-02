@@ -38,6 +38,7 @@ public class UsuarioService {
     public void deleteUsuario (Long id) {
         Usuario usuario = getUsuarioById(id);
         usuario.setDeleted(true);
+        usuarioRepository.save(usuario);
     }
 
 

@@ -95,6 +95,21 @@ public class AlumnoController {
         return GetHistoricoDto.of(historicoCursos);
     }
 
+
+    @Operation(summary = "Edita un alumno buscado por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha editado el alumno",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetAlumnoDto.class)),
+                            examples = {@ExampleObject(
+
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado ningun alumno",
+                    content = @Content),
+    })
     @PutMapping("/{id}")
     public GetAlumnoDto editAlumno(@PathVariable Long id, @RequestBody EditAlumnoDto editAlumnoDto) {
         return  alumnoService.editAlumno(id, editAlumnoDto);

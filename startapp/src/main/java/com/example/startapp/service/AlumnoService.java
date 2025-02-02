@@ -73,7 +73,6 @@ public class AlumnoService {
                     alumno.setPassword(editAlumnoDto.password());
                     alumno.setUsername(editAlumnoDto.username());
                     alumno.setHistoricoCursos(editAlumnoDto.historicoCursos());
-
                     return  GetAlumnoDto.of( alumnoRepository.save(alumno));
                 })
                 .orElseThrow(() -> new EntityNotFoundException("Alumno no encontrado"));
