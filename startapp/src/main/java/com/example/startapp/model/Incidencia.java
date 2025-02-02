@@ -44,12 +44,12 @@ public class Incidencia {
 
     //Helpers nota
 
-    public void addNota(Nota nota){
+    public void addNota(Nota nota) {
         notas.add(nota);
         nota.setIncidencia(this);
     }
 
-    public void removeNota(Nota nota){
+    public void removeNota(Nota nota) {
         notas.remove(nota);
     }
 

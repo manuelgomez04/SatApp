@@ -76,6 +76,5 @@ public class NotaService {
         incidencia.removeNota(findNotaById(notaId));
         incidenciaRepository.save(incidencia);
     }
-
-
+    
 }
