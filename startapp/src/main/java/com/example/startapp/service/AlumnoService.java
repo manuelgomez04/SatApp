@@ -2,6 +2,7 @@ package com.example.startapp.service;
 
 import com.example.startapp.dto.EditAlumnoDto;
 import com.example.startapp.dto.EditHistoricoDto;
+import com.example.startapp.dto.GetAlumnoDto;
 import com.example.startapp.model.Alumno;
 import com.example.startapp.model.HistoricoCursos;
 import com.example.startapp.repo.AlumnoRepository;
@@ -56,9 +57,25 @@ public class AlumnoService {
                 .cursoEscolar(editHistoricoDto.cursoEscolar())
                 .alumno(alumno)
                 .build();
-        alumno.getHistoricoCursos().add(historicoCursos);
+        alumno.addHistoricoCursos(historicoCursos);
         alumnoRepository.save(alumno);
         return historicoCursos;
+    }
+
+
+
+    public GetAlumnoDto editAlumno(Long id, EditAlumnoDto editAlumnoDto) {
+        return alumnoRepository.findById(id)
+                .map(alumno -> {
+                    alumno.setNombre(editAlumnoDto.nombre());
+                    alumno.setEmail(editAlumnoDto.email());
+                    alumno.setRole(editAlumnoDto.role());
+                    alumno.setPassword(editAlumnoDto.password());
+                    alumno.setUsername(editAlumnoDto.username());
+                    alumno.setHistoricoCursos(editAlumnoDto.historicoCursos());
+                    return  GetAlumnoDto.of( alumnoRepository.save(alumno));
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Alumno no encontrado"));
     }
 
 }

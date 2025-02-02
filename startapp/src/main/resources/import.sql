@@ -10,7 +10,7 @@ insert into nota(id,contenido,autor,fecha,incidencia_id) values (nextval('nota_s
 
 INSERT INTO usuario (id, nombre, username, password, email, role, deleted)
 VALUES
-    (nextval('usuario_seq'), 'Juan Pérez', 'juanperez', 'password123', 'juan.perez@example.com', 'USER', true),
+    (nextval('usuario_seq'), 'Juan Pérez', 'juanperez', 'password123', 'juan.perez@example.com', 'USER',  true),
     (nextval('usuario_seq'), 'María ', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN', false),
     (nextval('usuario_seq'), 'María l', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN', false),
     (nextval('usuario_seq'), 'María sfgd', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN', false),
@@ -21,8 +21,8 @@ VALUES
 
 INSERT INTO alumno (id) values (1);
 INSERT INTO tecnico (id) values (51);
-INSERT INTO personal (id) values (101);
-INSERT INTO personal (id) values (151);
+INSERT INTO personal (id, tipo) values (101, 'PROFESOR');
+INSERT INTO personal (id, tipo) values (151, 'PAS');
 INSERT INTO tecnico (id) values (201);
 INSERT INTO alumno (id) values (251);
 

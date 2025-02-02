@@ -2,6 +2,7 @@ package com.example.startapp.service;
 
 
 import com.example.startapp.dto.EditTecnicoDto;
+import com.example.startapp.dto.GetTecnicoDto;
 import com.example.startapp.model.Tecnico;
 import com.example.startapp.repo.TecnicoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -45,5 +46,16 @@ public class TecnicoService {
     }
 
 
+    public GetTecnicoDto editTecnico(Long id, EditTecnicoDto editTecnicoDto) {
+        return tecnicoRepository.findById(id).map(old ->
+        {
+            old.setNombre(editTecnicoDto.nombre());
+            old.setEmail(editTecnicoDto.email());
+            old.setRole(editTecnicoDto.role());
+            old.setPassword(editTecnicoDto.password());
+            old.setUsername(editTecnicoDto.username());
+            return GetTecnicoDto.of(tecnicoRepository.save(old));
+        }).orElseThrow(() -> new EntityNotFoundException("Tecnico no encontrado"));
+    }
 
 }

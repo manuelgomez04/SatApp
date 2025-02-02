@@ -33,22 +33,12 @@ public class UsuarioService {
         return result;
     }
 
-    public Usuario saveUsuario(EditUsuarioDto nuevoUsuario) {
-
-
-        return usuarioRepository.save(Usuario.builder()
-                .nombre(nuevoUsuario.nombre())
-                .email(nuevoUsuario.email())
-                .role(nuevoUsuario.role())
-                .password(nuevoUsuario.password())
-                .username(nuevoUsuario.username())
-                .build());
-    }
 
 
     public void deleteUsuario (Long id) {
         Usuario usuario = getUsuarioById(id);
         usuario.setDeleted(true);
+        usuarioRepository.save(usuario);
     }
 
 

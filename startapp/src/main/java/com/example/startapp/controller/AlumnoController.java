@@ -60,7 +60,7 @@ public class AlumnoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
                     description = "Se ha creado el alumno",
-                    content = { @Content(mediaType = "application/json",
+                    content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = GetAlumnoDto.class)),
                             examples = {@ExampleObject(
                             )}
@@ -79,7 +79,7 @@ public class AlumnoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
                     description = "Se ha creado el historico de curso",
-                    content = { @Content(mediaType = "application/json",
+                    content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = GetAlumnoDto.class)),
                             examples = {@ExampleObject(
                             )}
@@ -89,9 +89,29 @@ public class AlumnoController {
                     content = @Content),
     })
     @PostMapping("/{alumnoId}/historico")
-    public GetHistoricoDto saveHistoricoCurso(@PathVariable Long alumnoId, @RequestBody EditHistoricoDto historicoDto){
+    public GetHistoricoDto saveHistoricoCurso(@PathVariable Long alumnoId, @RequestBody EditHistoricoDto historicoDto) {
         HistoricoCursos historicoCursos = alumnoService.saveHistoricoCurso(alumnoId, historicoDto);
 
         return GetHistoricoDto.of(historicoCursos);
+    }
+
+
+    @Operation(summary = "Edita un alumno buscado por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha editado el alumno",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetAlumnoDto.class)),
+                            examples = {@ExampleObject(
+
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado ningun alumno",
+                    content = @Content),
+    })
+    @PutMapping("/{id}")
+    public GetAlumnoDto editAlumno(@PathVariable Long id, @RequestBody EditAlumnoDto editAlumnoDto) {
+        return  alumnoService.editAlumno(id, editAlumnoDto);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.startapp.service;
 
 import com.example.startapp.dto.EditPersonalDto;
+import com.example.startapp.dto.GetPersonalDto;
 import com.example.startapp.model.Personal;
 import com.example.startapp.repo.PersonalRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -38,8 +39,21 @@ public class PersonalService {
                 .email(editPersonalDto.email())
                 .role(editPersonalDto.role())
                 .password(editPersonalDto.password())
+                .tipo(editPersonalDto.tipo())
                 .username(editPersonalDto.username())
                 .build());
+    }
+
+    public GetPersonalDto editPersonal(Long id, EditPersonalDto editPersonalDto) {
+        return personalRepository.findById(id).map(old -> {
+            old.setNombre(editPersonalDto.nombre());
+            old.setEmail(editPersonalDto.email());
+            old.setRole(editPersonalDto.role());
+            old.setPassword(editPersonalDto.password());
+            old.setTipo(editPersonalDto.tipo());
+            old.setUsername(editPersonalDto.username());
+            return GetPersonalDto.of(personalRepository.save(old));
+        }).orElseThrow(() -> new EntityNotFoundException("Personal no encontrado"));
     }
 
 }
