@@ -1,3 +1,25 @@
+<<<<<<< HEAD
+2025-01-29 13:52:36.490291+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]inser into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(1,'1943-02-10','AA','AAAAAAA','ABIERTA',true)"; se esperaba "INSERT"
+Syntax error in SQL statement "[*]inser into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(1,'1943-02-10','AA','AAAAAAA','ABIERTA',true)"; expected "INSERT"; SQL statement:
+inser into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(1,'1943-02-10','AA','AAAAAAA','ABIERTA',true) [42001-232]
+2025-01-29 13:52:36.497282+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]inser into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1)"; se esperaba "INSERT"
+Syntax error in SQL statement "[*]inser into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1)"; expected "INSERT"; SQL statement:
+inser into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1) [42001-232]
+2025-01-29 13:54:27.340104+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]inser into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(1,'1943-02-10','AA','AAAAAAA','ABIERTA',true)"; se esperaba "INSERT"
+Syntax error in SQL statement "[*]inser into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(1,'1943-02-10','AA','AAAAAAA','ABIERTA',true)"; expected "INSERT"; SQL statement:
+inser into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(1,'1943-02-10','AA','AAAAAAA','ABIERTA',true) [42001-232]
+2025-01-29 13:54:27.348075+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]inser into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1)"; se esperaba "INSERT"
+Syntax error in SQL statement "[*]inser into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1)"; expected "INSERT"; SQL statement:
+inser into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1) [42001-232]
+2025-01-29 13:54:37.999653+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: La cantidad de columnas no coincide
+Column count does not match; SQL statement:
+insert into nota(id,contenido,autor,fecha,incidencia_id) values (1, 'AAAAAAAAB','2025-01-29',1) [21002-232]
+=======
 2025-01-29 18:42:20.994317+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Tabla "USUARIOS" no encontrada
 Table "USUARIOS" not found; SQL statement:
@@ -46,10 +68,17 @@ Syntax error in SQL statement "([*]nextval('usuario_seq'), 'MarÃ\00ada aaaa', '
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Columna "ID_ALUMNO" no encontrada
 Column "ID_ALUMNO" not found; SQL statement:
 INSERT INTO historico_cursos (id, id_alumno, curso_escolar, curso) VALUES (nextval('historico_cursos_seq'), 1, '2019-2020', '1Âº ESO') [42122-232]
+>>>>>>> origin/MainDeMentira
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:514)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
 	at org.h2.message.DbException.get(DbException.java:223)
 	at org.h2.message.DbException.get(DbException.java:199)
+<<<<<<< HEAD
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.command.dml.Insert.doPrepare(Insert.java:294)
+	at org.h2.command.dml.DataChangeStatement.prepare(DataChangeStatement.java:37)
+	at org.h2.command.Parser.prepareCommand(Parser.java:489)
+=======
 	at org.h2.table.Table.getColumn(Table.java:786)
 	at org.h2.command.Parser.parseColumn(Parser.java:1171)
 	at org.h2.command.Parser.parseColumnList(Parser.java:1156)
@@ -58,6 +87,7 @@ INSERT INTO historico_cursos (id, id_alumno, curso_escolar, curso) VALUES (nextv
 	at org.h2.command.Parser.parse(Parser.java:581)
 	at org.h2.command.Parser.parse(Parser.java:556)
 	at org.h2.command.Parser.prepareCommand(Parser.java:484)
+>>>>>>> origin/MainDeMentira
 	at org.h2.engine.SessionLocal.prepareLocal(SessionLocal.java:645)
 	at org.h2.engine.SessionLocal.prepareCommand(SessionLocal.java:561)
 	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1164)
@@ -75,6 +105,9 @@ INSERT INTO historico_cursos (id, id_alumno, curso_escolar, curso) VALUES (nextv
 	at org.hibernate.tool.schema.internal.SchemaCreatorImpl.doCreation(SchemaCreatorImpl.java:118)
 	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:250)
 	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
+<<<<<<< HEAD
+	at java.base/java.util.HashMap.forEach(HashMap.java:1429)
+=======
 	at java.base/java.util.HashMap.forEach(HashMap.java:1421)
 	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
 	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
@@ -200,6 +233,7 @@ INSERT INTO usuario (id, nombre, username, password, email, role, enabled) VALUE
 	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:250)
 	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:144)
 	at java.base/java.util.HashMap.forEach(HashMap.java:1421)
+>>>>>>> origin/MainDeMentira
 	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:141)
 	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
 	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
