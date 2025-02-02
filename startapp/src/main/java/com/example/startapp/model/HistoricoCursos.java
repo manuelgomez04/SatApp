@@ -24,5 +24,9 @@ public class HistoricoCursos {
     @ManyToOne
     private Alumno alumno;
 
+    public HistoricoCursos(String curso, String cursoEscolar) {
+        this.curso = curso;
+        this.cursoEscolar = cursoEscolar;
+    }
 
 }
