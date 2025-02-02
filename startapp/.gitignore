@@ -3,8 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-# Ignorar el archivo database.mv.db en la ruta startapp/db/
-startapp/db/database.mv.db
+
 ### STS ###
 .apt_generated
 .classpath
@@ -32,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignorar el archivo database.mv.db en la carpeta db
+db/database.mv.db
