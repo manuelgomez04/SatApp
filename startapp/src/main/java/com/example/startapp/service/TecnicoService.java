@@ -46,7 +46,7 @@ public class TecnicoService {
     }
 
 
-    public GetTecnicoDto editTecnico(Long id, EditTecnicoDto editTecnicoDto) {
+    public Tecnico editTecnico(Long id, EditTecnicoDto editTecnicoDto) {
         return tecnicoRepository.findById(id).map(old ->
         {
             old.setNombre(editTecnicoDto.nombre());
@@ -54,7 +54,7 @@ public class TecnicoService {
             old.setRole(editTecnicoDto.role());
             old.setPassword(editTecnicoDto.password());
             old.setUsername(editTecnicoDto.username());
-            return GetTecnicoDto.of(tecnicoRepository.save(old));
+            return tecnicoRepository.save(old);
         }).orElseThrow(() -> new EntityNotFoundException("Tecnico no encontrado"));
     }
 

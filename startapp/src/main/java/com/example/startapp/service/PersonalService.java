@@ -44,7 +44,7 @@ public class PersonalService {
                 .build());
     }
 
-    public GetPersonalDto editPersonal(Long id, EditPersonalDto editPersonalDto) {
+    public Personal editPersonal(Long id, EditPersonalDto editPersonalDto) {
         return personalRepository.findById(id).map(old -> {
             old.setNombre(editPersonalDto.nombre());
             old.setEmail(editPersonalDto.email());
@@ -52,7 +52,7 @@ public class PersonalService {
             old.setPassword(editPersonalDto.password());
             old.setTipo(editPersonalDto.tipo());
             old.setUsername(editPersonalDto.username());
-            return GetPersonalDto.of(personalRepository.save(old));
+            return personalRepository.save(old);
         }).orElseThrow(() -> new EntityNotFoundException("Personal no encontrado"));
     }
 

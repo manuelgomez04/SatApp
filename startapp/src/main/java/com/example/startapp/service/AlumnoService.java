@@ -64,7 +64,7 @@ public class AlumnoService {
 
 
 
-    public GetAlumnoDto editAlumno(Long id, EditAlumnoDto editAlumnoDto) {
+    public Alumno editAlumno(Long id, EditAlumnoDto editAlumnoDto) {
         return alumnoRepository.findById(id)
                 .map(alumno -> {
                     alumno.setNombre(editAlumnoDto.nombre());
@@ -73,7 +73,7 @@ public class AlumnoService {
                     alumno.setPassword(editAlumnoDto.password());
                     alumno.setUsername(editAlumnoDto.username());
                     alumno.setHistoricoCursos(editAlumnoDto.historicoCursos());
-                    return  GetAlumnoDto.of( alumnoRepository.save(alumno));
+                    return  alumnoRepository.save(alumno);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("Alumno no encontrado"));
     }

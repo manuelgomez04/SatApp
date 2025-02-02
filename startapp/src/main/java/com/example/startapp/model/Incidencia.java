@@ -51,6 +51,7 @@ public class Incidencia {
 
     public void removeNota(Nota nota){
         notas.remove(nota);
+
     }
 
     @Override
