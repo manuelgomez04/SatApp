@@ -102,8 +102,8 @@ public class NotasController {
                     content = @Content),
     })
     @PostMapping("/{incidenciaId}")
-    public ResponseEntity<Nota> saveNota(@PathVariable Long incidenciaId, @RequestBody EditNotaDto nota) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(notaService.saveNota(incidenciaId, nota));
+    public ResponseEntity<GetNotaDto> saveNota(@PathVariable Long incidenciaId, @RequestBody EditNotaDto nota) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(GetNotaDto.of(notaService.saveNota(incidenciaId, nota)));
     }
 
 
@@ -122,8 +122,8 @@ public class NotasController {
                     content = @Content),
     })
     @PutMapping("/{notaId}")
-    public Nota editNota(@PathVariable Long notaId, @RequestBody EditNotaDto nota) {
-        return notaService.editNota(notaId, nota);
+    public GetNotaDto editNota(@PathVariable Long notaId, @RequestBody EditNotaDto nota) {
+        return GetNotaDto.of(notaService.editNota(notaId, nota));
     }
 
 

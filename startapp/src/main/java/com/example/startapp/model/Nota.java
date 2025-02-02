@@ -26,7 +26,7 @@ public class Nota {
     private String contenido;
     private String autor;
 
-    @Id
+
     @ManyToOne
     private Incidencia incidencia;
 

@@ -31,9 +31,6 @@ public class Incidencia {
     private Estado estado;
     private Boolean urgencia;
 
-    /*
-    Nota, ubicacion,equipo, categoria, usuario, tecnico
-     */
 
     //Asociacion nota
     @ToString.Exclude
