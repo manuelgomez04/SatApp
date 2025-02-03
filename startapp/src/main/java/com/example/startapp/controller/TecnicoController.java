@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -78,9 +79,9 @@ public class TecnicoController {
                     content = @Content),
     })
     @PostMapping
-    public GetTecnicoDto saveTecnico(@RequestBody EditTecnicoDto nuevoTecnico) {
+    public ResponseEntity<GetTecnicoDto> saveTecnico(@RequestBody EditTecnicoDto nuevoTecnico) {
         Tecnico tecnico = tecnicoService.saveTecnico(nuevoTecnico);
-        return GetTecnicoDto.of(tecnico);
+        return ResponseEntity.ok(GetTecnicoDto.of(tecnico));
     }
 
     @Operation(summary = "Edita un técnico buscado por su id")
