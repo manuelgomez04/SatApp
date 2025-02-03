@@ -1,11 +1,7 @@
-insert into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(nextval('incidencia_seq'),'1943-02-10','AA','AAAAAAA','ABIERTA',true)
-insert into incidencia(id,fecha,titulo,descripcion,estado,urgencia) values(nextval('incidencia_seq'),'2024-02-10','ABA','BAAAAAAAB','PENDIENTE',false)
-
-insert into nota(id,contenido,autor,fecha,incidencia_id) values (nextval('nota_seq'), 'AAAAAAAAB','Jose','2025-01-29',currval('incidencia_seq'))
-insert into nota(id,contenido,autor,fecha,incidencia_id) values (nextval('nota_seq'), 'AAAAAAAAB','Pepe','2025-01-29',currval('incidencia_seq'))
-insert into nota(id,contenido,autor,fecha,incidencia_id) values (nextval('nota_seq'), 'AAAAAAAAB','Paco','2025-01-29',currval('incidencia_seq'))
-insert into nota(id,contenido,autor,fecha,incidencia_id) values (nextval('nota_seq'), 'AAAAAAAAB','Fran','2025-01-29',currval('incidencia_seq'))
-
+insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 1ºDAM');
+insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 2ºDAM');
+insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 1ºComercio');
+insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 2ºComercio');
 
 
 INSERT INTO usuario (id, nombre, username, password, email, role, deleted)
@@ -31,3 +27,10 @@ INSERT INTO historico_cursos (id, alumno_id, curso_escolar, curso) VALUES (nextv
 INSERT INTO historico_cursos (id, alumno_id, curso_escolar, curso) VALUES (nextval('historico_cursos_seq'), 1, '2020-2021', '2º ESO');
 
 
+insert into incidencia(id,fecha,titulo,descripcion,estado,urgencia,ubicacion_id) values(nextval('incidencia_seq'),'1943-02-10','In1','Esta mal','ABIERTA',true,currval('ubicacion_seq'));
+insert into incidencia(id,fecha,titulo,descripcion,estado,urgencia,ubicacion_id) values(nextval('incidencia_seq'),'2024-02-10','In2','Esta fatal','PENDIENTE',false,currval('ubicacion_seq'));
+
+insert into nota(id,contenido,autor,fecha,incidencia_id) values (nextval('nota_seq'), 'AAAAAAAAB','Jose','2025-01-29',currval('incidencia_seq'));
+insert into nota(id,contenido,autor,fecha,incidencia_id) values (nextval('nota_seq'), 'AAAAAAAAB','Pepe','2025-01-29',currval('incidencia_seq'));
+insert into nota(id,contenido,autor,fecha,incidencia_id) values (nextval('nota_seq'), 'AAAAAAAAB','Paco','2025-01-29',currval('incidencia_seq'));
+insert into nota(id,contenido,autor,fecha,incidencia_id) values (nextval('nota_seq'), 'AAAAAAAAB','Fran','2025-01-29',currval('incidencia_seq'));
