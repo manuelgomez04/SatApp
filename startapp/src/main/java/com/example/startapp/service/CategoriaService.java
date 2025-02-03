@@ -37,9 +37,37 @@ public class CategoriaService {
     }
 
 
-    public Categoria saveCategoria(EditCategoriaDto categoria) {
-        return categoriaRepository.save(Categoria.builder().nombre(categoria.nombre()).build());
+    public Categoria saveCategoria(EditCategoriaDto categoriaDto) {
+        // 1️⃣ Buscar la categoría padre por su ID
+        Categoria categoriaPadre = null;
+        if (categoriaDto.categoriaPadre() != null && categoriaDto.categoriaPadre().getId() != null) {
+            categoriaPadre = categoriaRepository.findById(categoriaDto.categoriaPadre().getId())
+                    .orElseThrow(() -> new CategoriaNotFoundException("No se encontró la categoría padre con ID: " + categoriaDto.categoriaPadre().getId()));
+        }
+
+        // 2️⃣ Crear la categoría principal (sin subcategorías por ahora)
+        Categoria nuevaCategoria = categoriaRepository.save(
+                Categoria.builder()
+                        .nombre(categoriaDto.nombre())
+                        .categoriaPadre(categoriaPadre)
+                        .build()
+        );
+
+        // 3️⃣ Asignar las subcategorías existentes (por ID) a la nueva categoría
+        if (categoriaDto.subCategorias() != null && !categoriaDto.subCategorias().isEmpty()) {
+            List<Categoria> subCategorias = categoriaDto.subCategorias().stream()
+                    .map(subCatDto -> categoriaRepository.findById(subCatDto.getId())
+                            .orElseThrow(() -> new CategoriaNotFoundException("No se encontró la subcategoría con ID: " + subCatDto.getId()))
+                    )
+                    .toList();
+
+            nuevaCategoria.setSubCategorias(subCategorias);
+        }
+
+        // 4️⃣ Guardar la categoría con las subcategorías asignadas
+        return categoriaRepository.save(nuevaCategoria);
     }
+
 
     public Categoria editCategoria(Long id, EditCategoriaDto categoria) {
         return categoriaRepository.findById(id).map(old -> {
