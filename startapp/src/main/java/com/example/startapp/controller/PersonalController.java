@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -78,9 +79,9 @@ public class PersonalController {
                     content = @Content),
     })
     @PostMapping
-    public GetPersonalDto savePersonal(@RequestBody EditPersonalDto nuevoPersonal) {
+    public ResponseEntity<GetPersonalDto> savePersonal(@RequestBody EditPersonalDto nuevoPersonal) {
         Personal personal = personalService.savePersonal(nuevoPersonal);
-        return GetPersonalDto.of(personal);
+        return ResponseEntity.ok(GetPersonalDto.of(personal));
     }
 
     @Operation(summary = "Edita un miembro del personal buscado por su id")
@@ -99,6 +100,6 @@ public class PersonalController {
     })
     @PutMapping("/{id}")
     public GetPersonalDto editPersonal(@PathVariable Long id, @RequestBody EditPersonalDto editPersonalDto) {
-        return GetPersonalDto.of( personalService.editPersonal(id, editPersonalDto));
+        return GetPersonalDto.of(personalService.editPersonal(id, editPersonalDto));
     }
 }

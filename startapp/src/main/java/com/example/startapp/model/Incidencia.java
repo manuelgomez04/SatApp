@@ -31,6 +31,12 @@ public class Incidencia {
     private Estado estado;
     private Boolean urgencia;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Builder.Default
+    @OneToMany
+    private List<Categoria> categorias = new ArrayList<>();
+
 
     //Asociacion nota
     @ToString.Exclude

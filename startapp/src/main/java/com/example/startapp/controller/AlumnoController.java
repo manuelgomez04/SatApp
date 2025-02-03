@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -70,9 +71,9 @@ public class AlumnoController {
                     content = @Content),
     })
     @PostMapping
-    public GetAlumnoDto saveAlumno(@RequestBody EditAlumnoDto alumnoNuevo) {
+    public ResponseEntity<GetAlumnoDto> saveAlumno(@RequestBody EditAlumnoDto alumnoNuevo) {
         Alumno alumno = alumnoService.saveAlumno(alumnoNuevo);
-        return GetAlumnoDto.of(alumno);
+        return ResponseEntity.ok(GetAlumnoDto.of(alumno));
     }
 
     @Operation(summary = "Crea un nuevo historico de curso para un alumno")
@@ -89,10 +90,10 @@ public class AlumnoController {
                     content = @Content),
     })
     @PostMapping("/{alumnoId}/historico")
-    public GetHistoricoDto saveHistoricoCurso(@PathVariable Long alumnoId, @RequestBody EditHistoricoDto historicoDto) {
+    public ResponseEntity<GetHistoricoDto> saveHistoricoCurso(@PathVariable Long alumnoId, @RequestBody EditHistoricoDto historicoDto) {
         HistoricoCursos historicoCursos = alumnoService.saveHistoricoCurso(alumnoId, historicoDto);
 
-        return GetHistoricoDto.of(historicoCursos);
+        return ResponseEntity.ok(GetHistoricoDto.of(historicoCursos));
     }
 
 
@@ -112,6 +113,6 @@ public class AlumnoController {
     })
     @PutMapping("/{id}")
     public GetAlumnoDto editAlumno(@PathVariable Long id, @RequestBody EditAlumnoDto editAlumnoDto) {
-        return  GetAlumnoDto.of( alumnoService.editAlumno(id, editAlumnoDto));
+        return GetAlumnoDto.of(alumnoService.editAlumno(id, editAlumnoDto));
     }
 }

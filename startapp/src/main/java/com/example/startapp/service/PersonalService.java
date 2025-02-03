@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,10 +29,14 @@ public class PersonalService {
     }
 
     public Personal getPersonalById(Long id) {
-        Personal result = personalRepository
-                .findById(id)
-                .orElseThrow(() -> new PersonalNotFoundException("Personal no encontrado"));
-        return result;
+
+        Optional <Personal> result = personalRepository.findById(id);
+
+        if (result.isEmpty()) {
+            throw new PersonalNotFoundException("Personal no encontrado");
+        } else {
+            return result.get();
+        }
     }
 
     public Personal savePersonal(EditPersonalDto editPersonalDto) {

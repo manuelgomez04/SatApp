@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -76,9 +77,11 @@ public class UsuarioController {
                     )}),
     })
     @DeleteMapping("/{id}")
-    public void deleteUsuario(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUsuario(@PathVariable Long id) {
 
         usuarioService.deleteUsuario(id);
+
+        return ResponseEntity.noContent().build();
     }
 
 }
