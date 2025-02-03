@@ -1,6 +1,7 @@
 package com.example.startapp.service;
 
 import com.example.startapp.dto.EditUsuarioDto;
+import com.example.startapp.error.UsuarioNotFoundException;
 import com.example.startapp.model.Usuario;
 import com.example.startapp.repo.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,7 +21,7 @@ public class UsuarioService {
         List<Usuario> result = usuarioRepository.findAll();
 
         if (result.isEmpty()) {
-            throw new EntityNotFoundException("No se encontraron usuarios");
+            throw new UsuarioNotFoundException("No se encontraron usuarios");
         } else {
             return result;
         }
@@ -29,7 +30,7 @@ public class UsuarioService {
     public Usuario getUsuarioById(Long id) {
         Usuario result = usuarioRepository
                 .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+                .orElseThrow(() -> new UsuarioNotFoundException("Usuario no encontrado"));
         return result;
     }
 

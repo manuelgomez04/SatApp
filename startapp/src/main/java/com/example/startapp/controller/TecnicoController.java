@@ -99,6 +99,6 @@ public class TecnicoController {
     })
     @PutMapping("/{id}")
     public GetTecnicoDto editTecnico(@PathVariable Long id, @RequestBody EditTecnicoDto editTecnicoDto) {
-        return tecnicoService.editTecnico(id, editTecnicoDto);
+        return GetTecnicoDto.of(tecnicoService.editTecnico(id, editTecnicoDto));
     }
 }

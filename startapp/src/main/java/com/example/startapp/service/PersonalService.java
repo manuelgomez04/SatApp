@@ -2,6 +2,7 @@ package com.example.startapp.service;
 
 import com.example.startapp.dto.EditPersonalDto;
 import com.example.startapp.dto.GetPersonalDto;
+import com.example.startapp.error.PersonalNotFoundException;
 import com.example.startapp.model.Personal;
 import com.example.startapp.repo.PersonalRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,7 +21,7 @@ public class PersonalService {
         List<Personal> result = personalRepository.findAll();
 
         if (result.isEmpty()) {
-            throw new EntityNotFoundException("No se encontraron personal");
+            throw new PersonalNotFoundException("No se encontraron personal");
         } else {
             return result;
         }
@@ -29,7 +30,7 @@ public class PersonalService {
     public Personal getPersonalById(Long id) {
         Personal result = personalRepository
                 .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Personal no encontrado"));
+                .orElseThrow(() -> new PersonalNotFoundException("Personal no encontrado"));
         return result;
     }
 
@@ -44,7 +45,7 @@ public class PersonalService {
                 .build());
     }
 
-    public GetPersonalDto editPersonal(Long id, EditPersonalDto editPersonalDto) {
+    public Personal editPersonal(Long id, EditPersonalDto editPersonalDto) {
         return personalRepository.findById(id).map(old -> {
             old.setNombre(editPersonalDto.nombre());
             old.setEmail(editPersonalDto.email());
@@ -52,8 +53,8 @@ public class PersonalService {
             old.setPassword(editPersonalDto.password());
             old.setTipo(editPersonalDto.tipo());
             old.setUsername(editPersonalDto.username());
-            return GetPersonalDto.of(personalRepository.save(old));
-        }).orElseThrow(() -> new EntityNotFoundException("Personal no encontrado"));
+            return personalRepository.save(old);
+        }).orElseThrow(() -> new PersonalNotFoundException("Personal no encontrado"));
     }
 
 }

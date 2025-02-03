@@ -99,6 +99,6 @@ public class PersonalController {
     })
     @PutMapping("/{id}")
     public GetPersonalDto editPersonal(@PathVariable Long id, @RequestBody EditPersonalDto editPersonalDto) {
-        return personalService.editPersonal(id, editPersonalDto);
+        return GetPersonalDto.of( personalService.editPersonal(id, editPersonalDto));
     }
 }
