@@ -3,6 +3,7 @@ package com.example.startapp.service;
 import com.example.startapp.dto.EditAlumnoDto;
 import com.example.startapp.dto.EditHistoricoDto;
 import com.example.startapp.dto.GetAlumnoDto;
+import com.example.startapp.error.AlumnoNotFoundException;
 import com.example.startapp.model.Alumno;
 import com.example.startapp.model.HistoricoCursos;
 import com.example.startapp.repo.AlumnoRepository;
@@ -25,7 +26,7 @@ public class AlumnoService {
         List<Alumno> result = alumnoRepository.findAllHis();
 
         if (result.isEmpty()) {
-            throw new EntityNotFoundException("No se encontraron alumnos");
+            throw new AlumnoNotFoundException("No se encontraron alumnos");
         } else {
             return result;
         }
@@ -34,7 +35,7 @@ public class AlumnoService {
     public Alumno getAlumnoById(Long id) {
         Alumno result = alumnoRepository
                 .findByIdHis(id)
-                .orElseThrow(() -> new EntityNotFoundException("Alumno no encontrado"));
+                .orElseThrow(() -> new AlumnoNotFoundException("Alumno no encontrado"));
         return result;
     }
 
@@ -64,7 +65,7 @@ public class AlumnoService {
 
 
 
-    public GetAlumnoDto editAlumno(Long id, EditAlumnoDto editAlumnoDto) {
+    public Alumno editAlumno(Long id, EditAlumnoDto editAlumnoDto) {
         return alumnoRepository.findById(id)
                 .map(alumno -> {
                     alumno.setNombre(editAlumnoDto.nombre());
@@ -73,7 +74,7 @@ public class AlumnoService {
                     alumno.setPassword(editAlumnoDto.password());
                     alumno.setUsername(editAlumnoDto.username());
                     alumno.setHistoricoCursos(editAlumnoDto.historicoCursos());
-                    return  GetAlumnoDto.of( alumnoRepository.save(alumno));
+                    return  alumnoRepository.save(alumno);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("Alumno no encontrado"));
     }

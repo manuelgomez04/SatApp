@@ -112,6 +112,6 @@ public class AlumnoController {
     })
     @PutMapping("/{id}")
     public GetAlumnoDto editAlumno(@PathVariable Long id, @RequestBody EditAlumnoDto editAlumnoDto) {
-        return  alumnoService.editAlumno(id, editAlumnoDto);
+        return  GetAlumnoDto.of( alumnoService.editAlumno(id, editAlumnoDto));
     }
 }
