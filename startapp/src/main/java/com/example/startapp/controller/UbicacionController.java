@@ -114,7 +114,7 @@ public class UbicacionController {
                     content = @Content),
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUbicacion(Long id) {
+    public ResponseEntity<?> deleteUbicacion(@PathVariable Long id) {
         ubicacionService.deleteUbicacion(id);
         return ResponseEntity.noContent().build();
     }
