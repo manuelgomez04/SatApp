@@ -42,8 +42,11 @@ public class Incidencia {
             orphanRemoval = true)
     private List<Nota> notas = new ArrayList<>();
 
-    //Helpers nota
+    @ManyToOne
+    @JoinColumn(name = "ubicacion_id", foreignKey = @ForeignKey(name = "fk_incidencia_ubicacion"))
+    private Ubicacion ubicacion;
 
+    //Helpers nota
     public void addNota(Nota nota){
         notas.add(nota);
         nota.setIncidencia(this);
