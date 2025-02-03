@@ -1,5 +1,7 @@
-
-
+insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 1ºDAM');
+insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 2ºDAM');
+insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 1ºComercio');
+insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 2ºComercio');
 
 
 INSERT INTO usuario (id, nombre, username, password, email, role, deleted)

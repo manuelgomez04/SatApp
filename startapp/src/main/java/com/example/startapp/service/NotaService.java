@@ -31,63 +31,67 @@ public class NotaService {
 
     public Nota findNotaById(Long id) {
         Optional<Nota> nota = incidenciaRepository.findByIdNota(id);
+
         if (nota.isEmpty()) {
             throw new EntityNotFoundException("No se ha encontrado una nota con ese id");
-        } else {
-            return nota.get();
         }
 
+        return nota.get();
     }
 
     @Transactional
     public Nota saveNota(Long incidenciaId, EditNotaDto nuevo) {
 
-        Optional<Incidencia> incidenciaOptional = incidenciaRepository.findById(incidenciaId);
+        Optional<Incidencia> incidencia = incidenciaRepository.findById(incidenciaId);
 
-        if (incidenciaOptional.isEmpty()) {
+        if (incidencia.isEmpty()) {
             throw new EntityNotFoundException("No se ha encontrado la incidencia");
-        } else {
-            Incidencia incidencia = incidenciaOptional.get();
-            Nota nota = Nota.builder()
-                    .fecha(nuevo.fecha())
-                    .contenido(nuevo.contenido())
-                    .autor(nuevo.autor())
-                    .incidencia(incidencia)
-                    .build();
-
-            incidencia.addNota(nota);
-
-            incidenciaRepository.save(incidencia);
-
-            return nota;
         }
 
+        Nota nota = Nota.builder()
+                .fecha(nuevo.fecha())
+                .contenido(nuevo.contenido())
+                .autor(nuevo.autor())
+                .incidencia(incidencia.get())
+                .build();
 
-    }
+        incidencia.get().addNota(nota);
 
-
-    @Transactional
-    public Nota editNota(Long notaId, EditNotaDto nuevo) {
-
-        Nota nota = incidenciaRepository.findByIdNota(notaId)
-                .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado la nota"));
-
-        nota.setAutor(nuevo.autor());
-        nota.setFecha(nuevo.fecha());
-        nota.setContenido(nuevo.contenido());
-
-        incidenciaRepository.save(nota.getIncidencia());
+        incidenciaRepository.save(incidencia.get());
 
         return nota;
     }
 
 
     @Transactional
+    public Nota editNota(Long notaId, EditNotaDto nuevo) {
+
+        Optional<Nota> nota = incidenciaRepository.findByIdNota(notaId);
+
+        if (nota.isEmpty()) {
+            throw new EntityNotFoundException("No se ha encontrado una nota con ese id");
+        }
+
+        nota.get().setAutor(nuevo.autor());
+        nota.get().setFecha(nuevo.fecha());
+        nota.get().setContenido(nuevo.contenido());
+
+        incidenciaRepository.save(nota.get().getIncidencia());
+
+        return nota.get();
+    }
+
+
+    @Transactional
     public void removeNota(Long notaId, Long incidenciaId) {
-        Incidencia incidencia = incidenciaRepository.findById(incidenciaId)
-                .orElseThrow(() -> new EntityNotFoundException("Incidencia no encontrada con el id " + incidenciaId));
-        incidencia.removeNota(findNotaById(notaId));
-        incidenciaRepository.save(incidencia);
+        Optional<Incidencia> incidencia = incidenciaRepository.findById(incidenciaId);
+
+        if (incidencia.isEmpty()) {
+            throw new EntityNotFoundException("No se ha encontrado la incidencia");
+        }
+
+        incidencia.get().removeNota(findNotaById(notaId));
+        incidenciaRepository.save(incidencia.get());
     }
 
 
