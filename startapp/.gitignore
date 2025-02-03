@@ -33,4 +33,4 @@ build/
 .vscode/
 
 # Ignorar el archivo database.mv.db en la carpeta db
-db/database.mv.db
+db/*
