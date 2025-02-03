@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -29,27 +30,39 @@ public class NotaService {
     }
 
     public Nota findNotaById(Long id) {
-        return incidenciaRepository.findByIdNota(id).orElseThrow(() -> new EntityNotFoundException("No se ha encontrado una nota con ese id"));
+        Optional<Nota> nota = incidenciaRepository.findByIdNota(id);
+        if (nota.isEmpty()) {
+            throw new EntityNotFoundException("No se ha encontrado una nota con ese id");
+        } else {
+            return nota.get();
+        }
+
     }
 
     @Transactional
     public Nota saveNota(Long incidenciaId, EditNotaDto nuevo) {
 
-        Incidencia incidencia = incidenciaRepository.findById(incidenciaId)
-                .orElseThrow(() -> new EntityNotFoundException("No se ha encontrado la incidencia"));
+        Optional<Incidencia> incidenciaOptional = incidenciaRepository.findById(incidenciaId);
 
-        Nota nota = Nota.builder()
-                .fecha(nuevo.fecha())
-                .contenido(nuevo.contenido())
-                .autor(nuevo.autor())
-                .incidencia(incidencia)
-                .build();
+        if (incidenciaOptional.isEmpty()) {
+            throw new EntityNotFoundException("No se ha encontrado la incidencia");
+        } else {
+            Incidencia incidencia = incidenciaOptional.get();
+            Nota nota = Nota.builder()
+                    .fecha(nuevo.fecha())
+                    .contenido(nuevo.contenido())
+                    .autor(nuevo.autor())
+                    .incidencia(incidencia)
+                    .build();
 
-        incidencia.addNota(nota);
+            incidencia.addNota(nota);
 
-        incidenciaRepository.save(incidencia);
+            incidenciaRepository.save(incidencia);
 
-        return nota;
+            return nota;
+        }
+
+
     }
 
 

@@ -28,10 +28,10 @@ public class UsuarioService {
     }
 
     public Usuario getUsuarioById(Long id) {
-        Usuario result = usuarioRepository
+        Usuario user = usuarioRepository
                 .findById(id)
                 .orElseThrow(() -> new UsuarioNotFoundException("Usuario no encontrado"));
-        return result;
+        return user;
     }
 
 

@@ -32,6 +32,12 @@ public class Incidencia {
     private Boolean urgencia;
 
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Builder.Default
+    @OneToMany
+    private List<Categoria> categorias = new ArrayList<>();
+
     //Asociacion nota
     @ToString.Exclude
     @Builder.Default
@@ -44,12 +50,12 @@ public class Incidencia {
 
     //Helpers nota
 
-    public void addNota(Nota nota){
+    public void addNota(Nota nota) {
         notas.add(nota);
         nota.setIncidencia(this);
     }
 
-    public void removeNota(Nota nota){
+    public void removeNota(Nota nota) {
         notas.remove(nota);
 
     }
