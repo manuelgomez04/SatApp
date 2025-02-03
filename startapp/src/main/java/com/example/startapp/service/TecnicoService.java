@@ -3,6 +3,7 @@ package com.example.startapp.service;
 
 import com.example.startapp.dto.EditTecnicoDto;
 import com.example.startapp.dto.GetTecnicoDto;
+import com.example.startapp.error.TecnicoNotFoundException;
 import com.example.startapp.model.Tecnico;
 import com.example.startapp.repo.TecnicoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,7 +23,7 @@ public class TecnicoService {
         List<Tecnico> result = tecnicoRepository.findAll();
 
         if (result.isEmpty()) {
-            throw new EntityNotFoundException("No se encontraron tecnicos");
+            throw new TecnicoNotFoundException("No se encontraron tecnicos");
         } else {
             return result;
         }
@@ -31,7 +32,7 @@ public class TecnicoService {
     public Tecnico getTecnicoById(Long id) {
         Tecnico result = tecnicoRepository
                 .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Tecnico no encontrado"));
+                .orElseThrow(() -> new TecnicoNotFoundException("Tecnico no encontrado"));
         return result;
     }
 
