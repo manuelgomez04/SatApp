@@ -1,6 +1,8 @@
 package com.example.startapp.service;
 
 import com.example.startapp.dto.EditNotaDto;
+import com.example.startapp.error.IncidenciaNotFoundException;
+import com.example.startapp.error.NotaNotFoundException;
 import com.example.startapp.model.Incidencia;
 import com.example.startapp.model.Nota;
 import com.example.startapp.repo.IncidenciaRepository;
@@ -23,7 +25,7 @@ public class NotaService {
         List<Nota> notas = incidenciaRepository.findAllNotas();
 
         if (notas.isEmpty()) {
-            throw new EntityNotFoundException("No se han encontrado notas");
+            throw new NotaNotFoundException("No se han encontrado notas");
         }
 
         return notas;
@@ -33,7 +35,7 @@ public class NotaService {
         Optional<Nota> nota = incidenciaRepository.findByIdNota(id);
 
         if (nota.isEmpty()) {
-            throw new EntityNotFoundException("No se ha encontrado una nota con ese id");
+            throw new NotaNotFoundException("No se ha encontrado una nota con ese id");
         }
 
         return nota.get();
@@ -45,7 +47,7 @@ public class NotaService {
         Optional<Incidencia> incidencia = incidenciaRepository.findById(incidenciaId);
 
         if (incidencia.isEmpty()) {
-            throw new EntityNotFoundException("No se ha encontrado la incidencia");
+            throw new IncidenciaNotFoundException("No se ha encontrado la incidencia");
         }
 
         Nota nota = Nota.builder()
@@ -69,7 +71,7 @@ public class NotaService {
         Optional<Nota> nota = incidenciaRepository.findByIdNota(notaId);
 
         if (nota.isEmpty()) {
-            throw new EntityNotFoundException("No se ha encontrado una nota con ese id");
+            throw new NotaNotFoundException("No se ha encontrado una nota con ese id");
         }
 
         nota.get().setAutor(nuevo.autor());
@@ -87,7 +89,7 @@ public class NotaService {
         Optional<Incidencia> incidencia = incidenciaRepository.findById(incidenciaId);
 
         if (incidencia.isEmpty()) {
-            throw new EntityNotFoundException("No se ha encontrado la incidencia");
+            throw new IncidenciaNotFoundException("No se ha encontrado la incidencia");
         }
 
         incidencia.get().removeNota(findNotaById(notaId));
