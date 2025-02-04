@@ -32,4 +32,8 @@ public class EquipoService {
         return equipoRepository.save(equipo);
     }
 
+    public void deleteEquipo(Long id){
+        equipoRepository.deleteById(id);
+    }
+
 }
