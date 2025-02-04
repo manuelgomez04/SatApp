@@ -3,6 +3,7 @@ insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 2ºDAM');
 insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 1ºComercio');
 insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 2ºComercio');
 
+insert into equipo(id,nombre,caracteristicas) values(nextval('equipo_seq'),'Pc1','Car1,Car2,Car3');
 
 INSERT INTO usuario (id, nombre, username, password, email, role, deleted)
 VALUES

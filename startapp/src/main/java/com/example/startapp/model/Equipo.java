@@ -1,16 +1,20 @@
 package com.example.startapp.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@Builder
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Equipo {
 
     @Id
@@ -18,6 +22,7 @@ public class Equipo {
     private Long id;
 
     private String nombre;
-    private List<String> caracteristicas;
+    @Column(length = 400)
+    private String caracteristicas;
     
 }
