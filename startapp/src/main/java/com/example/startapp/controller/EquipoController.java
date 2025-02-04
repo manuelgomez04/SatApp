@@ -1,5 +1,6 @@
 package com.example.startapp.controller;
 
+import com.example.startapp.dto.GetCategoriaDto;
 import com.example.startapp.dto.GetEquipoDto;
 import com.example.startapp.dto.GetNotaDto;
 import com.example.startapp.service.EquipoService;
@@ -57,6 +58,19 @@ public class EquipoController {
         return equipoService.findAll().stream().map(GetEquipoDto::of).toList();
     }
 
+    @Operation(summary = "Crear un nuevo equipo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Se ha creado el equipo",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetEquipoDto.class)),
+                            examples = {@ExampleObject(
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "400",
+                    description = "No se ha creado un equipo",
+                    content = @Content),
+    })
     @PostMapping
     public ResponseEntity<GetEquipoDto> saveEquipo(@RequestBody GetEquipoDto equipoDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(GetEquipoDto.of(equipoService.saveEquipo(equipoDto)));
