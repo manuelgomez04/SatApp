@@ -6,8 +6,8 @@ import java.util.List;
 
 public record GetCategoriaDto(
         String nombre,
-        List<GetSubCategoriaDto> subCategorias, // Lista de subcategorías (evitando bucles)
-        GetCategoriaPadreDto categoriaPadre // Evita referencias infinitas
+        List<GetSubCategoriaDto> subCategorias,
+        GetCategoriaPadreDto categoriaPadre
 ) {
     public static GetCategoriaDto of(Categoria categoria) {
         return new GetCategoriaDto(
