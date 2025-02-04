@@ -8,14 +8,16 @@ insert into equipo(id,nombre,caracteristicas,ubicacion_id) values(nextval('equip
 insert into equipo(id,nombre,caracteristicas,ubicacion_id) values(nextval('equipo_seq'),'Pc2','Car1,Car2,Car3',currval('ubicacion_seq'));
 insert into equipo(id,nombre,caracteristicas,ubicacion_id) values(nextval('equipo_seq'),'Pc3','Car1,Car2,Car3',currval('ubicacion_seq'));
 
-INSERT INTO usuario (id, nombre, username, password, email, role, deleted)
-VALUES
-    (nextval('usuario_seq'), 'Juan Pérez', 'juanperez', 'password123', 'juan.perez@example.com', 'USER',  true),
-    (nextval('usuario_seq'), 'María ', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN', false),
-    (nextval('usuario_seq'), 'María l', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN', false),
-    (nextval('usuario_seq'), 'María sfgd', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN', false),
-    (nextval('usuario_seq'), 'María aaaa', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN', true),
-        (nextval('usuario_seq'), 'Juan Pérez', 'juanperez', 'password123', 'juan.perez@example.com', 'USER', false);
+INSERT INTO usuario (id, nombre, username, password, email, role, deleted) values  (nextval('usuario_seq'), 'Juan Pérez', 'juanperez', 'password123', 'juan.perez@example.com', 'USER',  true);
+INSERT INTO usuario (id, nombre, username, password, email, role, deleted) values   (nextval('usuario_seq'), 'María ', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN', false);
+INSERT INTO usuario (id, nombre, username, password, email, role, deleted) values    (nextval('usuario_seq'), 'María l', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN', false);
+INSERT INTO usuario (id, nombre, username, password, email, role, deleted) values (nextval('usuario_seq'), 'María sfgd', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN', false);
+INSERT INTO usuario (id, nombre, username, password, email, role, deleted) values (nextval('usuario_seq'), 'María aaaa', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN', true);
+INSERT INTO usuario (id, nombre, username, password, email, role, deleted) values (nextval('usuario_seq'), 'Juan Pérez', 'juanperez', 'password123', 'juan.perez@example.com', 'USER', false);
+
+
+
+
 
 
 
