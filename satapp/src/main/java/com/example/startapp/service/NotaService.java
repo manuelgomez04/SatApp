@@ -95,6 +95,5 @@ public class NotaService {
         incidencia.get().removeNota(findNotaById(notaId));
         incidenciaRepository.save(incidencia.get());
     }
-
-
+    
 }
