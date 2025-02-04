@@ -29,7 +29,7 @@ public class Categoria {
     @ToString.Exclude
     private Categoria categoriaPadre;
 
-    @OneToMany(mappedBy = "categoriaPadre", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "categoriaPadre", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     @ToString.Exclude
     private List<Categoria> subCategorias = new ArrayList<>();
@@ -42,7 +42,6 @@ public class Categoria {
 
     public void deleteSubCategoria(Categoria categoria) {
         subCategorias.remove(categoria);
-        categoria.setCategoriaPadre(null);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class CategoriaService {
     private final CategoriaRepository categoriaRepository;
 
     public List<Categoria> getAllCategorias() {
-        List<Categoria> result = categoriaRepository.findAll();
+        List<Categoria> result = categoriaRepository.findAllCat();
 
         if (result.isEmpty()) {
             throw new CategoriaNotFoundException("No se encontraron categorias");
@@ -65,12 +65,20 @@ public class CategoriaService {
     }
 
 
-    public Categoria editCategoria(Long id, EditCategoriaDto categoria) {
-        return categoriaRepository.findById(id).map(old -> {
-            old.setNombre(categoria.nombre());
-            return categoriaRepository.save(old);
-        }).orElseThrow(() -> new CategoriaNotFoundException("Categoria no encontrada"));
+    public Categoria editCategoria(Long id, EditCategoriaDto editCategoriaDto) {
+        return categoriaRepository.findById(id)
+                .map(categoria -> {
+                    categoria.setNombre(editCategoriaDto.nombre());
+                    categoria.setCategoriaPadre(editCategoriaDto.categoriaPadre());
+                    categoria.setSubCategorias(editCategoriaDto.subCategorias());
+                    editCategoriaDto.subCategorias().forEach(subCategoria -> {
+                        subCategoria.getSubCategorias().forEach(subCategoria2 -> {
+                            subCategoria2.deleteSubCategoria(subCategoria);
+                        });
+                    });
+                    return categoriaRepository.save(categoria);
+                })
+                .orElseThrow(() -> new CategoriaNotFoundException("No se encontró la categoría con ID: " + id));
     }
 
- 
 }

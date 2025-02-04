@@ -108,5 +108,10 @@ public class CategoriaController {
         return ResponseEntity.ok(GetCategoriaDto.of(categoriaService.saveCategoria(categoria)));
     }
 
+    @PutMapping("/{id}")
+    public GetCategoriaDto editCategoria(@PathVariable Long id, @RequestBody EditCategoriaDto editCategoriaDto) {
+        return GetCategoriaDto.of(categoriaService.editCategoria(id, editCategoriaDto));
+    }
+
 
 }
