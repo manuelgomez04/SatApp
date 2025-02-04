@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignorar el archivo database.mv.db en la carpeta db
+db/*

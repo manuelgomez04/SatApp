@@ -1,6 +1,7 @@
 package com.example.startapp.service;
 
 import com.example.startapp.dto.EditUsuarioDto;
+import com.example.startapp.error.UsuarioNotFoundException;
 import com.example.startapp.model.Usuario;
 import com.example.startapp.repo.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,35 +22,28 @@ public class UsuarioService {
         List<Usuario> result = usuarioRepository.findAll();
 
         if (result.isEmpty()) {
-            throw new EntityNotFoundException("No se encontraron usuarios");
+            throw new UsuarioNotFoundException("No se encontraron usuarios");
         } else {
             return result;
         }
     }
 
     public Usuario getUsuarioById(Long id) {
-        Usuario result = usuarioRepository
-                .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
-        return result;
+        Optional <Usuario> user = usuarioRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new UsuarioNotFoundException("Usuario no encontrado");
+        } else {
+            return user.get();
+        }
+
     }
 
-    public Usuario saveUsuario(EditUsuarioDto nuevoUsuario) {
-
-
-        return usuarioRepository.save(Usuario.builder()
-                .nombre(nuevoUsuario.nombre())
-                .email(nuevoUsuario.email())
-                .role(nuevoUsuario.role())
-                .password(nuevoUsuario.password())
-                .username(nuevoUsuario.username())
-                .build());
-    }
 
 
     public void deleteUsuario (Long id) {
         Usuario usuario = getUsuarioById(id);
         usuario.setDeleted(true);
+        usuarioRepository.save(usuario);
     }
 
 

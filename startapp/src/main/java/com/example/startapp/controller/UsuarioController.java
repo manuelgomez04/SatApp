@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,7 +52,7 @@ public class UsuarioController {
                                                       "password": "password456",
                                                       "role": "ADMIN"
                                                   }
-                                                  
+                                            
                                             """
                             )}
                     )}),
@@ -62,6 +63,25 @@ public class UsuarioController {
     @GetMapping
     public List<GetUsuarioDto> getUsuario() {
         return usuarioService.getAllUsuarios().stream().map(GetUsuarioDto::of).toList();
+    }
+
+    @Operation(summary = "Borra un usuario buscado por id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Se ha eliminado el usuario",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Usuario.class)),
+                            examples = {@ExampleObject(
+
+                            )}
+                    )}),
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUsuario(@PathVariable Long id) {
+
+        usuarioService.deleteUsuario(id);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

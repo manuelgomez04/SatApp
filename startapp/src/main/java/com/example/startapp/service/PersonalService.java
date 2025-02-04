@@ -1,6 +1,8 @@
 package com.example.startapp.service;
 
 import com.example.startapp.dto.EditPersonalDto;
+import com.example.startapp.dto.GetPersonalDto;
+import com.example.startapp.error.PersonalNotFoundException;
 import com.example.startapp.model.Personal;
 import com.example.startapp.repo.PersonalRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -8,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,17 +22,21 @@ public class PersonalService {
         List<Personal> result = personalRepository.findAll();
 
         if (result.isEmpty()) {
-            throw new EntityNotFoundException("No se encontraron personal");
+            throw new PersonalNotFoundException("No se encontraron personal");
         } else {
             return result;
         }
     }
 
     public Personal getPersonalById(Long id) {
-        Personal result = personalRepository
-                .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Personal no encontrado"));
-        return result;
+
+        Optional<Personal> result = personalRepository.findById(id);
+
+        if (result.isEmpty()) {
+            throw new PersonalNotFoundException("Personal no encontrado");
+        } else {
+            return result.get();
+        }
     }
 
     public Personal savePersonal(EditPersonalDto editPersonalDto) {
@@ -38,8 +45,30 @@ public class PersonalService {
                 .email(editPersonalDto.email())
                 .role(editPersonalDto.role())
                 .password(editPersonalDto.password())
+                .tipo(editPersonalDto.tipo())
                 .username(editPersonalDto.username())
                 .build());
     }
+
+    public Personal editPersonal(Long id, EditPersonalDto editPersonalDto) {
+        Optional<Personal> personal = personalRepository.findById(id);
+
+        if (personal.isEmpty()) {
+            throw new PersonalNotFoundException("Personal no encontrado");
+        } else {
+            personal.map(p -> {
+                p.setNombre(editPersonalDto.nombre());
+                p.setEmail(editPersonalDto.email());
+                p.setRole(editPersonalDto.role());
+                p.setPassword(editPersonalDto.password());
+                p.setTipo(editPersonalDto.tipo());
+                p.setUsername(editPersonalDto.username());
+                return personalRepository.save(p);
+            });
+        }
+
+        return personal.get();
+    }
+
 
 }

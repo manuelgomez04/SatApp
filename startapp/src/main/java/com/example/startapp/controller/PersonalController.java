@@ -4,6 +4,7 @@ import com.example.startapp.dto.EditPersonalDto;
 import com.example.startapp.dto.GetAlumnoDto;
 import com.example.startapp.dto.GetPersonalDto;
 import com.example.startapp.dto.GetTecnicoDto;
+import com.example.startapp.model.Alumno;
 import com.example.startapp.model.Personal;
 import com.example.startapp.service.PersonalService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,7 +14,9 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;import lombok.RequiredArgsConstructor;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -66,7 +69,7 @@ public class PersonalController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
                     description = "Se ha creado el miembro del personal",
-                    content = { @Content(mediaType = "application/json",
+                    content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = GetPersonalDto.class)),
                             examples = {@ExampleObject(
                             )}
@@ -76,8 +79,27 @@ public class PersonalController {
                     content = @Content),
     })
     @PostMapping
-    public GetPersonalDto savePersonal(@RequestBody EditPersonalDto nuevoPersonal) {
+    public ResponseEntity<GetPersonalDto> savePersonal(@RequestBody EditPersonalDto nuevoPersonal) {
         Personal personal = personalService.savePersonal(nuevoPersonal);
-        return GetPersonalDto.of(personal);
+        return ResponseEntity.ok(GetPersonalDto.of(personal));
+    }
+
+    @Operation(summary = "Edita un miembro del personal buscado por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha editado el miembro del personal",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetPersonalDto.class)),
+                            examples = {@ExampleObject(
+
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado ningun miembro del personal",
+                    content = @Content),
+    })
+    @PutMapping("/{id}")
+    public GetPersonalDto editPersonal(@PathVariable Long id, @RequestBody EditPersonalDto editPersonalDto) {
+        return GetPersonalDto.of(personalService.editPersonal(id, editPersonalDto));
     }
 }

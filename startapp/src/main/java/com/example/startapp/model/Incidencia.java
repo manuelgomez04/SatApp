@@ -31,8 +31,19 @@ public class Incidencia {
     private Estado estado;
     private Boolean urgencia;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Builder.Default
+    @OneToMany
+    private List<Categoria> categorias = new ArrayList<>();
 
-    //Asociacion nota
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Builder.Default
+    @OneToMany
+    private List<Equipo> equipos = new ArrayList<>();
+
     @ToString.Exclude
     @Builder.Default
     @EqualsAndHashCode.Exclude
@@ -42,8 +53,14 @@ public class Incidencia {
             orphanRemoval = true)
     private List<Nota> notas = new ArrayList<>();
 
-    //Helpers nota
+    @ManyToOne
+    @JoinColumn(name = "ubicacion_id", foreignKey = @ForeignKey(name = "fk_incidencia_ubicacion"))
+    private Ubicacion ubicacion;
 
+<<<<<<< HEAD
+=======
+    //Helpers nota
+>>>>>>> MainDeMentira
     public void addNota(Nota nota) {
         notas.add(nota);
         nota.setIncidencia(this);
@@ -51,6 +68,7 @@ public class Incidencia {
 
     public void removeNota(Nota nota) {
         notas.remove(nota);
+
     }
 
     @Override

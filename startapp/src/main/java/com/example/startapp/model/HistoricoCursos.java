@@ -22,7 +22,13 @@ public class HistoricoCursos {
     private String curso;
 
     @ManyToOne
+    @JoinColumn(name = "alumno_id",
+            foreignKey = @ForeignKey(name = "fk_alumno_historico"))
     private Alumno alumno;
 
+    public HistoricoCursos(String curso, String cursoEscolar) {
+        this.curso = curso;
+        this.cursoEscolar = cursoEscolar;
+    }
 
 }

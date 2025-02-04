@@ -3,6 +3,7 @@ package com.example.startapp.controller;
 import com.example.startapp.dto.EditTecnicoDto;
 import com.example.startapp.dto.GetAlumnoDto;
 import com.example.startapp.dto.GetTecnicoDto;
+import com.example.startapp.model.Alumno;
 import com.example.startapp.model.Tecnico;
 import com.example.startapp.service.TecnicoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -67,8 +69,8 @@ public class TecnicoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
                     description = "Se ha creado el técnico",
-                    content = { @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = GetAlumnoDto.class)),
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetTecnicoDto.class)),
                             examples = {@ExampleObject(
                             )}
                     )}),
@@ -77,8 +79,27 @@ public class TecnicoController {
                     content = @Content),
     })
     @PostMapping
-    public GetTecnicoDto saveTecnico(@RequestBody EditTecnicoDto nuevoTecnico) {
+    public ResponseEntity<GetTecnicoDto> saveTecnico(@RequestBody EditTecnicoDto nuevoTecnico) {
         Tecnico tecnico = tecnicoService.saveTecnico(nuevoTecnico);
-        return GetTecnicoDto.of(tecnico);
+        return ResponseEntity.ok(GetTecnicoDto.of(tecnico));
+    }
+
+    @Operation(summary = "Edita un técnico buscado por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha editado el técnico",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetTecnicoDto.class)),
+                            examples = {@ExampleObject(
+
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado ningun técnico",
+                    content = @Content),
+    })
+    @PutMapping("/{id}")
+    public GetTecnicoDto editTecnico(@PathVariable Long id, @RequestBody EditTecnicoDto editTecnicoDto) {
+        return GetTecnicoDto.of(tecnicoService.editTecnico(id, editTecnicoDto));
     }
 }

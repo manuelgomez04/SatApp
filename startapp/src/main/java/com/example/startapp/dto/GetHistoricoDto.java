@@ -13,4 +13,6 @@ public record GetHistoricoDto(
         );
     }
 
+    
+
 }
