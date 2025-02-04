@@ -57,10 +57,7 @@ public class Incidencia {
     @JoinColumn(name = "ubicacion_id", foreignKey = @ForeignKey(name = "fk_incidencia_ubicacion"))
     private Ubicacion ubicacion;
 
-<<<<<<< HEAD
-=======
     //Helpers nota
->>>>>>> MainDeMentira
     public void addNota(Nota nota) {
         notas.add(nota);
         nota.setIncidencia(this);
