@@ -78,7 +78,7 @@ public class UbicacionController {
     })
     @GetMapping("/{id}")
     public GetUbicacionDto getById(@PathVariable Long id) {
-        return GetUbicacionDto.of(ubicacionService.findById(id));
+        return GetUbicacionDto.of(ubicacionService.findById(id).get());
     }
 
     @Operation(summary = "Crea una ubicación")

@@ -3,9 +3,9 @@ insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 2ºDAM');
 insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 1ºComercio');
 insert into ubicacion(id,nombre) values(nextval('ubicacion_seq'),'Aula 2ºComercio');
 
-insert into equipo(id,nombre,caracteristicas) values(nextval('equipo_seq'),'Pc1','Car1,Car2,Car3');
-insert into equipo(id,nombre,caracteristicas) values(nextval('equipo_seq'),'Pc2','Car1,Car2,Car3');
-insert into equipo(id,nombre,caracteristicas) values(nextval('equipo_seq'),'Pc3','Car1,Car2,Car3');
+insert into equipo(id,nombre,caracteristicas,ubicacion_id) values(nextval('equipo_seq'),'Pc1','Car1,Car2,Car3',currval('ubicacion_seq'));
+insert into equipo(id,nombre,caracteristicas,ubicacion_id) values(nextval('equipo_seq'),'Pc2','Car1,Car2,Car3',currval('ubicacion_seq'));
+insert into equipo(id,nombre,caracteristicas,ubicacion_id) values(nextval('equipo_seq'),'Pc3','Car1,Car2,Car3',currval('ubicacion_seq'));
 
 INSERT INTO usuario (id, nombre, username, password, email, role, deleted)
 VALUES
