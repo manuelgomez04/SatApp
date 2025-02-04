@@ -3,6 +3,8 @@ package com.example.startapp.controller;
 import com.example.startapp.dto.GetCategoriaDto;
 import com.example.startapp.dto.GetEquipoDto;
 import com.example.startapp.dto.GetNotaDto;
+import com.example.startapp.model.Equipo;
+import com.example.startapp.model.Ubicacion;
 import com.example.startapp.service.EquipoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -74,5 +76,25 @@ public class EquipoController {
     @PostMapping
     public ResponseEntity<GetEquipoDto> saveEquipo(@RequestBody GetEquipoDto equipoDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(GetEquipoDto.of(equipoService.saveEquipo(equipoDto)));
+    }
+
+    @Operation(summary = "Borra un equipo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha eliminado el equipo",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Equipo.class)),
+                            examples = {@ExampleObject(
+
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado ningún equipo",
+                    content = @Content),
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteEquipo(@PathVariable Long id) {
+        equipoService.deleteEquipo(id);
+        return ResponseEntity.noContent().build();
     }
 }
