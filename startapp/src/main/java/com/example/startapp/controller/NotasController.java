@@ -118,7 +118,7 @@ public class NotasController {
                             )}
                     )}),
             @ApiResponse(responseCode = "404",
-                    description = "No se ha encontrado ningún monumento",
+                    description = "No se ha encontrado ningúna nota",
                     content = @Content),
     })
     @PutMapping("/{notaId}")
