@@ -27,22 +27,29 @@ public class UbicacionService {
         return ubicaciones;
     }
 
-    public Ubicacion findById(Long ubicaId) {
+    public Optional<Ubicacion> findById(Long ubicaId) {
         Optional<Ubicacion> ubicacion = ubicacionRepository.findById(ubicaId);
         if (ubicacion.isEmpty()) {
             throw new UbicacionNotFoundException("Ubicación no encontrada");
         }
-        return ubicacion.get();
+        return ubicacion;
     }
 
     public Ubicacion saveUbicacion(GetUbicacionDto nuevo) {
 
-        Ubicacion ubi = Ubicacion.builder().nombre(nuevo.nombre()).build();
+
+        Ubicacion ubi = Ubicacion.builder()
+                .nombre(nuevo.nombre())
+                .build();
+
+
         return ubicacionRepository.save(ubi);
     }
 
     public void deleteUbicacion(Long idUbi) {
+
         ubicacionRepository.deleteById(idUbi);
+
     }
 
 }
