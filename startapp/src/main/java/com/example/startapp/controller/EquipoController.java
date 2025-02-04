@@ -1,8 +1,6 @@
 package com.example.startapp.controller;
 
-import com.example.startapp.dto.GetCategoriaDto;
-import com.example.startapp.dto.GetEquipoDto;
-import com.example.startapp.dto.GetNotaDto;
+import com.example.startapp.dto.*;
 import com.example.startapp.model.Equipo;
 import com.example.startapp.model.Ubicacion;
 import com.example.startapp.service.EquipoService;
@@ -60,6 +58,30 @@ public class EquipoController {
         return equipoService.findAll().stream().map(GetEquipoDto::of).toList();
     }
 
+    @Operation(summary = "Obtener un equipo por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha encontrado el equipo",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetEquipoDto.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            {
+                                               "nombre": "Pc1",
+                                               "caracteristicas": "Car1,Car2,Car3"
+                                            }
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado el equipo",
+                    content = @Content),
+    })
+    @GetMapping("/{id}")
+    public GetEquipoDto getById(@PathVariable Long id) {
+        return GetEquipoDto.of(equipoService.findById(id));
+    }
+
     @Operation(summary = "Crear un nuevo equipo")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
@@ -77,6 +99,26 @@ public class EquipoController {
     public ResponseEntity<GetEquipoDto> saveEquipo(@RequestBody GetEquipoDto equipoDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(GetEquipoDto.of(equipoService.saveEquipo(equipoDto)));
     }
+
+    @Operation(summary = "Edita un equipo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha editado el equipo",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = EditEquipoDto.class)),
+                            examples = {@ExampleObject(
+
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado ningún equipo",
+                    content = @Content),
+    })
+    @PutMapping("/{id}")
+    public GetEquipoDto editEquipo(@PathVariable Long id, @RequestBody EditEquipoDto equipoDto) {
+        return GetEquipoDto.of(equipoService.editEquipo(id, equipoDto));
+    }
+
 
     @Operation(summary = "Borra un equipo")
     @ApiResponses(value = {

@@ -1,5 +1,6 @@
 package com.example.startapp.service;
 
+import com.example.startapp.dto.EditEquipoDto;
 import com.example.startapp.dto.GetEquipoDto;
 import com.example.startapp.error.EquipoNotFoundException;
 import com.example.startapp.model.Equipo;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +25,16 @@ public class EquipoService {
         return results;
     }
 
+    public Equipo findById(Long id) {
+        Optional<Equipo> equipo = equipoRepository.findById(id);
+
+        if (equipo.isEmpty()) {
+            throw new EquipoNotFoundException("Equipo no encontrado");
+        }
+        return equipo.get();
+
+    }
+
     public Equipo saveEquipo(GetEquipoDto getEquipoDto) {
 
         Equipo equipo = Equipo.builder()
@@ -32,7 +44,21 @@ public class EquipoService {
         return equipoRepository.save(equipo);
     }
 
-    public void deleteEquipo(Long id){
+    public Equipo editEquipo(Long id, EditEquipoDto nuevo) {
+
+        Optional<Equipo> antiguo = equipoRepository.findById(id);
+
+        if (antiguo.isEmpty()) {
+            throw new EquipoNotFoundException("Equipo no encontrado");
+        }
+
+        antiguo.get().setNombre(nuevo.nombre());
+        antiguo.get().setCaracteristicas(nuevo.caracteristicas());
+
+        return equipoRepository.save(antiguo.get());
+    }
+
+    public void deleteEquipo(Long id) {
         equipoRepository.deleteById(id);
     }
 
