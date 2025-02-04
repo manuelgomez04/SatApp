@@ -20,4 +20,5 @@ public class Ubicacion {
 
     private String nombre;
 
+    
 }
