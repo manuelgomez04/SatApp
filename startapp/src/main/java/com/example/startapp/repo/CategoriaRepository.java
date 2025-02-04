@@ -16,9 +16,9 @@ public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
     List<Categoria> findAllCat();
 
     @Query("""
-            select c from Categoria c
-            join fetch c.subCategorias
-            where c.id = :id
+                select distinct c from Categoria c
+                left join fetch c.subCategorias
+                where c.id = :id
             """)
-    Optional<Categoria> findByIdHis(Long id);
+    Optional<Categoria> findByIdCat(Long id);
 }

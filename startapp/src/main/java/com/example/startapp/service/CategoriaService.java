@@ -4,6 +4,7 @@ import com.example.startapp.dto.EditCategoriaDto;
 import com.example.startapp.error.CategoriaNotFoundException;
 import com.example.startapp.model.Categoria;
 import com.example.startapp.repo.CategoriaRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class CategoriaService {
     }
 
     public Categoria getCategoriaById(Long id) {
-        Optional<Categoria> result = categoriaRepository.findById(id);
+        Optional<Categoria> result = categoriaRepository.findByIdCat(id);
 
         if (result.isEmpty()) {
             throw new CategoriaNotFoundException("Categoria no encontrada");
@@ -62,23 +63,29 @@ public class CategoriaService {
         }
 
         return categoriaRepository.save(nuevaCategoria);
+
+
     }
 
 
+    @Transactional
     public Categoria editCategoria(Long id, EditCategoriaDto editCategoriaDto) {
-        return categoriaRepository.findById(id)
+        return categoriaRepository.findByIdCat(id)
                 .map(categoria -> {
                     categoria.setNombre(editCategoriaDto.nombre());
                     categoria.setCategoriaPadre(editCategoriaDto.categoriaPadre());
                     categoria.setSubCategorias(editCategoriaDto.subCategorias());
-                    editCategoriaDto.subCategorias().forEach(subCategoria -> {
-                        subCategoria.getSubCategorias().forEach(subCategoria2 -> {
-                            subCategoria2.deleteSubCategoria(subCategoria);
-                        });
-                    });
+
+
                     return categoriaRepository.save(categoria);
                 })
-                .orElseThrow(() -> new CategoriaNotFoundException("No se encontró la categoría con ID: " + id));
+                .orElseThrow(() -> new CategoriaNotFoundException("No se ha encontrado ninguna categoria con ese id"));
+
+
     }
 
+
 }
+
+
+

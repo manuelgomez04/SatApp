@@ -35,15 +35,6 @@ public class Categoria {
     private List<Categoria> subCategorias = new ArrayList<>();
 
 
-    public void addSubCategoria(Categoria categoria) {
-        subCategorias.add(categoria);
-        categoria.setCategoriaPadre(this);
-    }
-
-    public void deleteSubCategoria(Categoria categoria) {
-        subCategorias.remove(categoria);
-    }
-
     @Override
     public final boolean equals(Object o) {
         if (this == o) return true;
