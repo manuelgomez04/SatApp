@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,10 +31,15 @@ public class TecnicoService {
     }
 
     public Tecnico getTecnicoById(Long id) {
-        Tecnico result = tecnicoRepository
-                .findById(id)
-                .orElseThrow(() -> new TecnicoNotFoundException("Tecnico no encontrado"));
-        return result;
+
+       Optional<Tecnico> result = tecnicoRepository.findById(id);
+       if (result.isEmpty()) {
+           throw new TecnicoNotFoundException("Tecnico no encontrado");}
+       else {
+              return result.get();
+       }
+
+
     }
 
     public Tecnico saveTecnico(EditTecnicoDto nuevoTecnico) {
@@ -48,15 +54,25 @@ public class TecnicoService {
 
 
     public Tecnico editTecnico(Long id, EditTecnicoDto editTecnicoDto) {
-        return tecnicoRepository.findById(id).map(old ->
-        {
-            old.setNombre(editTecnicoDto.nombre());
-            old.setEmail(editTecnicoDto.email());
-            old.setRole(editTecnicoDto.role());
-            old.setPassword(editTecnicoDto.password());
-            old.setUsername(editTecnicoDto.username());
-            return tecnicoRepository.save(old);
-        }).orElseThrow(() -> new EntityNotFoundException("Tecnico no encontrado"));
+
+        Optional<Tecnico> tecnico = tecnicoRepository.findById(id);
+
+        if (tecnico.isEmpty()) {
+            throw new TecnicoNotFoundException("Tecnico no encontrado");
+        } else {
+            tecnico.map(t -> {
+                t.setNombre(editTecnicoDto.nombre());
+                t.setEmail(editTecnicoDto.email());
+                t.setRole(editTecnicoDto.role());
+                t.setPassword(editTecnicoDto.password());
+                t.setUsername(editTecnicoDto.username());
+                return tecnicoRepository.save(t);
+            });
+
+        }
+        return tecnico.get();
+
+
     }
 
 }

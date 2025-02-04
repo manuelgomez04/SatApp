@@ -39,50 +39,87 @@ public class CategoriaService {
 
 
     public Categoria saveCategoria(EditCategoriaDto categoriaDto) {
+
         Categoria categoriaPadre = null;
         if (categoriaDto.categoriaPadre() != null && categoriaDto.categoriaPadre().getId() != null) {
-            categoriaPadre = categoriaRepository.findById(categoriaDto.categoriaPadre().getId())
-                    .orElseThrow(() -> new CategoriaNotFoundException("No se encontró la categoría padre con ID: " + categoriaDto.categoriaPadre().getId()));
+            Optional<Categoria> optionalPadre = categoriaRepository.findById(categoriaDto.categoriaPadre().getId());
+            if (optionalPadre.isEmpty()) {
+                throw new CategoriaNotFoundException("Categoría padre con ID " + categoriaDto.categoriaPadre().getId() + " no encontrada");
+            }
+            categoriaPadre = optionalPadre.get();
         }
 
-        Categoria nuevaCategoria = categoriaRepository.save(
-                Categoria.builder()
-                        .nombre(categoriaDto.nombre())
-                        .categoriaPadre(categoriaPadre)
-                        .build()
-        );
+        Categoria cNueva = Categoria.builder()
+                .nombre(categoriaDto.nombre())
+                .categoriaPadre(categoriaPadre)
+                .build();
 
-        if (categoriaDto.subCategorias() != null && !categoriaDto.subCategorias().isEmpty()) {
-            List<Categoria> subCategorias = categoriaDto.subCategorias().stream()
-                    .map(subCatDto -> categoriaRepository.findById(subCatDto.getId())
-                            .orElseThrow(() -> new CategoriaNotFoundException("No se encontró la subcategoría con ID: " + subCatDto.getId()))
-                    )
-                    .toList();
+        cNueva = categoriaRepository.saveAndFlush(cNueva);
 
-            nuevaCategoria.setSubCategorias(subCategorias);
+        for (Categoria subCategoriaDto : categoriaDto.subCategorias()) {
+            if (subCategoriaDto.getId() != null) {
+                Optional<Categoria> optionalSubCategoria = categoriaRepository.findById(subCategoriaDto.getId());
+                if (optionalSubCategoria.isEmpty()) {
+                    throw new CategoriaNotFoundException("Subcategoría con ID " + subCategoriaDto.getId() + " no encontrada");
+                }
+
+                Categoria subCategoria = optionalSubCategoria.get();
+
+                if (subCategoria.getCategoriaPadre() != null) {
+                    throw new CategoriaNotFoundException("La subcategoría con ID " + subCategoriaDto.getId() + " ya tiene una categoría padre");
+                }
+
+                subCategoria.setCategoriaPadre(cNueva);
+                categoriaRepository.save(subCategoria);
+            }
         }
 
-        return categoriaRepository.save(nuevaCategoria);
-
-
+        return cNueva;
     }
 
 
-    @Transactional
     public Categoria editCategoria(Long id, EditCategoriaDto editCategoriaDto) {
-        return categoriaRepository.findByIdCat(id)
-                .map(categoria -> {
-                    categoria.setNombre(editCategoriaDto.nombre());
-                    categoria.setCategoriaPadre(editCategoriaDto.categoriaPadre());
-                    categoria.setSubCategorias(editCategoriaDto.subCategorias());
+        Optional<Categoria> categoriaOpt = categoriaRepository.findByIdCat(id);
+        if (categoriaOpt.isEmpty()) {
+            throw new CategoriaNotFoundException("No se ha encontrado ninguna categoría con ese id");
+        }
+
+        Categoria categoria = categoriaOpt.get();
 
 
-                    return categoriaRepository.save(categoria);
-                })
-                .orElseThrow(() -> new CategoriaNotFoundException("No se ha encontrado ninguna categoria con ese id"));
+        categoria.setNombre(editCategoriaDto.nombre());
 
 
+        if (editCategoriaDto.categoriaPadre() != null && editCategoriaDto.categoriaPadre().getId() != null) {
+            Optional<Categoria> categoriaPadreOpt = categoriaRepository.findById(editCategoriaDto.categoriaPadre().getId());
+            if (categoriaPadreOpt.isEmpty()) {
+                throw new RuntimeException("La categoría padre con ID " + editCategoriaDto.categoriaPadre().getId() + " no existe.");
+            }
+            categoria.setCategoriaPadre(categoriaPadreOpt.get());
+        } else {
+            categoria.setCategoriaPadre(null);
+        }
+
+        categoria.getSubCategorias().clear();
+        for (Categoria subCategoriaDto : editCategoriaDto.subCategorias()) {
+            if (subCategoriaDto.getId() != null) {
+                Optional<Categoria> subCategoriaOpt = categoriaRepository.findById(subCategoriaDto.getId());
+                if (subCategoriaOpt.isEmpty()) {
+                    throw new RuntimeException("Subcategoría con ID " + subCategoriaDto.getId() + " no encontrada.");
+                }
+
+                Categoria subCategoria = subCategoriaOpt.get();
+                if (subCategoria.getCategoriaPadre() != null) {
+                    throw new RuntimeException("La subcategoría con ID " + subCategoriaDto.getId() + " ya tiene un padre.");
+                }
+
+                categoria.addSubCategoria(subCategoria);
+            }
+        }
+
+        return categoriaRepository.save(categoria);
     }
+
 
 
 }
