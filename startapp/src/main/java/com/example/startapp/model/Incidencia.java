@@ -38,7 +38,12 @@ public class Incidencia {
     private List<Categoria> categorias = new ArrayList<>();
 
 
-    //Asociacion nota
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @Builder.Default
+    @OneToMany
+    private List<Equipo> equipos = new ArrayList<>();
+
     @ToString.Exclude
     @Builder.Default
     @EqualsAndHashCode.Exclude
@@ -53,12 +58,12 @@ public class Incidencia {
     private Ubicacion ubicacion;
 
     //Helpers nota
-    public void addNota(Nota nota){
+    public void addNota(Nota nota) {
         notas.add(nota);
         nota.setIncidencia(this);
     }
 
-    public void removeNota(Nota nota){
+    public void removeNota(Nota nota) {
         notas.remove(nota);
 
     }

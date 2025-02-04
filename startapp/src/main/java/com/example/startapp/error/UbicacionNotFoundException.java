@@ -7,10 +7,10 @@ public class UbicacionNotFoundException extends RuntimeException {
     }
 
     public UbicacionNotFoundException(Long id) {
-        super("No hay usuarios con ese ID: " + id);
+        super("No hay ubicaciones con ese ID: " + id);
     }
 
     public UbicacionNotFoundException() {
-        super("No hay usuarios con esos requisitos de búsqueda");
+        super("No hay ubicaciones con esos requisitos de búsqueda");
     }
 }
