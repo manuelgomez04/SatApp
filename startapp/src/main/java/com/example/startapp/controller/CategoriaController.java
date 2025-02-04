@@ -108,5 +108,24 @@ public class CategoriaController {
         return ResponseEntity.ok(GetCategoriaDto.of(categoriaService.saveCategoria(categoria)));
     }
 
+    @Operation(summary = "Edita una categoría buscada por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha editado la categoría",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetCategoriaDto.class)),
+                            examples = {@ExampleObject(
+
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado ninguna categoría",
+                    content = @Content),
+    })
+    @PutMapping("/{id}")
+    public GetCategoriaDto editCategoria(@PathVariable Long id, @RequestBody EditCategoriaDto editCategoriaDto) {
+        return GetCategoriaDto.of(categoriaService.editCategoria(id, editCategoriaDto));
+    }
+
 
 }

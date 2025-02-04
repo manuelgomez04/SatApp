@@ -30,7 +30,7 @@ public class PersonalService {
 
     public Personal getPersonalById(Long id) {
 
-        Optional <Personal> result = personalRepository.findById(id);
+        Optional<Personal> result = personalRepository.findById(id);
 
         if (result.isEmpty()) {
             throw new PersonalNotFoundException("Personal no encontrado");
@@ -51,15 +51,24 @@ public class PersonalService {
     }
 
     public Personal editPersonal(Long id, EditPersonalDto editPersonalDto) {
-        return personalRepository.findById(id).map(old -> {
-            old.setNombre(editPersonalDto.nombre());
-            old.setEmail(editPersonalDto.email());
-            old.setRole(editPersonalDto.role());
-            old.setPassword(editPersonalDto.password());
-            old.setTipo(editPersonalDto.tipo());
-            old.setUsername(editPersonalDto.username());
-            return personalRepository.save(old);
-        }).orElseThrow(() -> new PersonalNotFoundException("Personal no encontrado"));
+        Optional<Personal> personal = personalRepository.findById(id);
+
+        if (personal.isEmpty()) {
+            throw new PersonalNotFoundException("Personal no encontrado");
+        } else {
+            personal.map(p -> {
+                p.setNombre(editPersonalDto.nombre());
+                p.setEmail(editPersonalDto.email());
+                p.setRole(editPersonalDto.role());
+                p.setPassword(editPersonalDto.password());
+                p.setTipo(editPersonalDto.tipo());
+                p.setUsername(editPersonalDto.username());
+                return personalRepository.save(p);
+            });
+        }
+
+        return personal.get();
     }
+
 
 }

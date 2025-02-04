@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,10 +34,14 @@ public class AlumnoService {
     }
 
     public Alumno getAlumnoById(Long id) {
-        Alumno result = alumnoRepository
-                .findByIdHis(id)
-                .orElseThrow(() -> new AlumnoNotFoundException("Alumno no encontrado"));
-        return result;
+        Optional<Alumno> result = alumnoRepository.findByIdHis(id);
+
+        if (result.isEmpty()) {
+            throw new AlumnoNotFoundException("Alumno no encontrado");
+        } else {
+            return result.get();
+        }
+
     }
 
     public Alumno saveAlumno(EditAlumnoDto editAlumnoDto) {
@@ -64,19 +69,24 @@ public class AlumnoService {
     }
 
 
-
     public Alumno editAlumno(Long id, EditAlumnoDto editAlumnoDto) {
-        return alumnoRepository.findById(id)
-                .map(alumno -> {
-                    alumno.setNombre(editAlumnoDto.nombre());
-                    alumno.setEmail(editAlumnoDto.email());
-                    alumno.setRole(editAlumnoDto.role());
-                    alumno.setPassword(editAlumnoDto.password());
-                    alumno.setUsername(editAlumnoDto.username());
-                    alumno.setHistoricoCursos(editAlumnoDto.historicoCursos());
-                    return  alumnoRepository.save(alumno);
-                })
-                .orElseThrow(() -> new EntityNotFoundException("Alumno no encontrado"));
+        Optional<Alumno> alumno = alumnoRepository.findById(id);
+
+        if (alumno.isPresent()) {
+            alumno.map(a -> {
+                a.setNombre(editAlumnoDto.nombre());
+                a.setEmail(editAlumnoDto.email());
+                a.setRole(editAlumnoDto.role());
+                a.setPassword(editAlumnoDto.password());
+                a.setUsername(editAlumnoDto.username());
+                a.setHistoricoCursos(editAlumnoDto.historicoCursos());
+                return alumnoRepository.save(a);
+            });
+        } else {
+            throw new AlumnoNotFoundException("Alumno no encontrado");
+        }
+
+        return alumno.get();
     }
 
 }

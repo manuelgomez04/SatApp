@@ -15,6 +15,14 @@ public record GetCategoriaDto(
                 categoria.getSubCategorias().stream().map(GetSubCategoriaDto::of).toList(),
                 categoria.getCategoriaPadre() != null ? GetCategoriaPadreDto.of(categoria.getCategoriaPadre()) : null
         );
+
+    }
+    public static EditCategoriaDto from (Categoria categoria){
+        return new EditCategoriaDto(
+                categoria.getNombre(),
+                categoria.getSubCategorias(),
+                categoria.getCategoriaPadre()
+        );
     }
 }
 

@@ -26,21 +26,19 @@ public class Categoria {
     @ManyToOne
     @JoinColumn(name = "categoria_padre_id",
             foreignKey = @ForeignKey(name = "fk_categoria_padre_categoria"))
-    @ToString.Exclude
     private Categoria categoriaPadre;
 
-    @OneToMany(mappedBy = "categoriaPadre", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "categoriaPadre", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     @ToString.Exclude
     private List<Categoria> subCategorias = new ArrayList<>();
 
-
     public void addSubCategoria(Categoria categoria) {
-        subCategorias.add(categoria);
         categoria.setCategoriaPadre(this);
+        subCategorias.add(categoria);
     }
 
-    public void deleteSubCategoria(Categoria categoria) {
+    public void removeSubCategoria(Categoria categoria) {
         subCategorias.remove(categoria);
         categoria.setCategoriaPadre(null);
     }

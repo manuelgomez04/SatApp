@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,10 +29,13 @@ public class UsuarioService {
     }
 
     public Usuario getUsuarioById(Long id) {
-        Usuario user = usuarioRepository
-                .findById(id)
-                .orElseThrow(() -> new UsuarioNotFoundException("Usuario no encontrado"));
-        return user;
+        Optional <Usuario> user = usuarioRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new UsuarioNotFoundException("Usuario no encontrado");
+        } else {
+            return user.get();
+        }
+
     }
 
 
