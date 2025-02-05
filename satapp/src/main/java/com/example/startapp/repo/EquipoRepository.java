@@ -10,9 +10,9 @@ import java.util.List;
 public interface EquipoRepository extends JpaRepository<Equipo, Long> {
 
     @Query("""
-            SELECT e 
-            FROM Equipo e 
-            WHERE e.ubicacion.id = ?1
+            select e 
+            from Equipo e 
+            where e.ubicacion.id = ?1
             """)
     List<Equipo> findByUbicacionId(Long ubicacionId);
 }
