@@ -65,6 +65,37 @@ public class PersonalController {
         return personalService.getAllPersonal().stream().map(GetPersonalDto::of).toList();
     }
 
+
+
+    @Operation(summary = "Obtiene un miembro del personal por su Id ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha encontrado el miembro del personal buscado",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetPersonalDto.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            
+                                                 {
+                                                               "nombre": "Juan PÃ©rez",
+                                                               "username": "juanperez",
+                                                               "email": "juan.perez@example.com",
+                                                               "password": "password123",
+                                                               "role": "USER",
+                                                               "tipo": "PROFESOR"
+                                                               }
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado el alumno",
+                    content = @Content),
+    })
+    @GetMapping("/{id}")
+    public GetPersonalDto getPersonalById(@PathVariable Long id) {
+        return GetPersonalDto.of(personalService.getPersonalById(id));
+    }
+
     @Operation(summary = "Crea un miembro del personal")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",

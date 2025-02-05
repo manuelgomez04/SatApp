@@ -70,7 +70,7 @@ public class AlumnoService {
 
 
     public Alumno editAlumno(Long id, EditAlumnoDto editAlumnoDto) {
-        Optional<Alumno> alumno = alumnoRepository.findById(id);
+        Optional<Alumno> alumno = alumnoRepository.findByIdHis(id);
 
         if (alumno.isPresent()) {
             alumno.map(a -> {
@@ -79,7 +79,6 @@ public class AlumnoService {
                 a.setRole(editAlumnoDto.role());
                 a.setPassword(editAlumnoDto.password());
                 a.setUsername(editAlumnoDto.username());
-                a.setHistoricoCursos(editAlumnoDto.historicoCursos());
                 return alumnoRepository.save(a);
             });
         } else {

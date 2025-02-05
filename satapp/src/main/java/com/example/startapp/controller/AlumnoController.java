@@ -57,6 +57,37 @@ public class AlumnoController {
         return alumnoService.getAllAlumnos().stream().map(GetAlumnoDto::of).toList();
     }
 
+
+    @Operation(summary = "Obtiene un alumno por su Id ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha encontrado el alumno buscado",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetAlumnoDto.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            
+                                                 {
+                                                               "nombre": "Juan PÃ©rez",
+                                                               "username": "juanperez",
+                                                               "email": "juan.perez@example.com",
+                                                               "password": "password123",
+                                                               "role": "USER",
+                                                               "historicoCursos": []
+                                                               },
+                                             
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado el alumno",
+                    content = @Content),
+    })
+    @GetMapping("/{id}")
+    public GetAlumnoDto getAlumno(@PathVariable Long id) {
+        return GetAlumnoDto.of(alumnoService.getAlumnoById(id));
+    }
+
     @Operation(summary = "Crea un nuevo alumno")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
@@ -104,6 +135,7 @@ public class AlumnoController {
                     content = {@Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = GetAlumnoDto.class)),
                             examples = {@ExampleObject(
+
 
                             )}
                     )}),
