@@ -3,6 +3,7 @@ package com.example.startapp.controller;
 import com.example.startapp.dto.EditNotaDto;
 import com.example.startapp.dto.GetNotaDto;
 import com.example.startapp.model.Nota;
+import com.example.startapp.model.Personal;
 import com.example.startapp.service.NotaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -22,7 +23,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/nota")
-@Tag(name = "Nota", description = "Controlador de notas")
+@Tag(name = "Nota", description = "Operaciones relacionadas con notas")
 public class NotasController {
 
     private final NotaService notaService;
@@ -102,7 +103,17 @@ public class NotasController {
                     content = @Content),
     })
     @PostMapping("/{incidenciaId}")
-    public ResponseEntity<GetNotaDto> saveNota(@PathVariable Long incidenciaId, @RequestBody EditNotaDto nota) {
+    public ResponseEntity<GetNotaDto> saveNota(@PathVariable Long incidenciaId, @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Cuerpo de la nota", required = true,
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Nota.class),
+                    examples = @ExampleObject(value = """
+                            {
+                                "fecha": "2025-01-29",
+                                "contenido": "ejemplo",
+                                "autor": "Jose"
+                            }
+                            """))) @RequestBody EditNotaDto nota) {
         return ResponseEntity.status(HttpStatus.CREATED).body(GetNotaDto.of(notaService.saveNota(incidenciaId, nota)));
     }
 
@@ -122,7 +133,18 @@ public class NotasController {
                     content = @Content),
     })
     @PutMapping("/{notaId}")
-    public GetNotaDto editNota(@PathVariable Long notaId, @RequestBody EditNotaDto nota) {
+    public GetNotaDto editNota(@PathVariable Long notaId, @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Cuerpo de la nota", required = true,
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Nota.class),
+                    examples = @ExampleObject(value = """
+                            {
+                                "incidenciaId": 51,
+                                "fecha": "2025-01-29",
+                                "contenido": "AAAAAAAAB",
+                                "autor": "Jose1"
+                            }
+                            """))) @RequestBody EditNotaDto nota) {
         return GetNotaDto.of(notaService.editNota(notaId, nota));
     }
 }

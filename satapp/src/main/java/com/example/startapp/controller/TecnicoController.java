@@ -146,13 +146,13 @@ public class TecnicoController {
                     schema = @Schema(implementation = Tecnico.class),
                     examples = @ExampleObject(value = """
                             {
-                                   "nombre": "MarÃ­a ",
-                                   "username": "marialopez54",
-                                   "email": "maria.lopez@example.com",
-                                   "password": "password3456",
-                                   "role": "ADMIN"
-                               }
-                            """)))@RequestBody EditTecnicoDto editTecnicoDto) {
+                                    "nombre": "Mar­ado ",
+                                    "username": "marialopez",
+                                    "email": "maria.lopez@example.com",
+                                    "password": "password456",
+                                    "role": "ADMIN"
+                                }
+                            """))) @RequestBody EditTecnicoDto editTecnicoDto) {
         return GetTecnicoDto.of(tecnicoService.editTecnico(id, editTecnicoDto));
     }
 

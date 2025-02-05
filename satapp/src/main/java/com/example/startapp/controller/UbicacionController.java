@@ -24,7 +24,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/ubicacion")
-@Tag(name = "Ubicacion", description = "Controlador para ubicaciones")
+@Tag(name = "Ubicacion", description = "Operaciones relacionadas con ubicaciones")
 public class UbicacionController {
 
     private final UbicacionService ubicacionService;

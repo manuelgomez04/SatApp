@@ -28,6 +28,9 @@ INSERT INTO historico_cursos (id, alumno_id, curso_escolar, curso) VALUES (nextv
 
 insert into categoria(id,nombre) values (nextval('categoria_seq'),'CATEGORIA1');
 insert into categoria(id,nombre, categoria_padre_id) values (nextval('categoria_seq'),'CATEGORIA2', 1);
+insert into categoria(id,nombre) values (nextval('categoria_seq'),'CATEGORIA3');
+insert into categoria(id,nombre ) values (nextval('categoria_seq'),'CATEGORIA4');
+
 
 
 insert into incidencia(id,fecha,titulo,descripcion,estado,urgencia,ubicacion_id) values(nextval('incidencia_seq'),'1943-02-10','Rotura','Se ha roto algo no se sabe el que','ABIERTA',true,101);
