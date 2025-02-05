@@ -1,8 +1,6 @@
 package com.example.startapp.controller;
 
-import com.example.startapp.dto.EditTecnicoDto;
-import com.example.startapp.dto.GetAlumnoDto;
-import com.example.startapp.dto.GetTecnicoDto;
+import com.example.startapp.dto.*;
 import com.example.startapp.model.Alumno;
 import com.example.startapp.model.Tecnico;
 import com.example.startapp.service.TecnicoService;
@@ -133,4 +131,16 @@ public class TecnicoController {
     public GetTecnicoDto editTecnico(@PathVariable Long id, @RequestBody EditTecnicoDto editTecnicoDto) {
         return GetTecnicoDto.of(tecnicoService.editTecnico(id, editTecnicoDto));
     }
+
+    @PutMapping("/{idTecnico}/asignar/{idIncidencia}")
+    public ResponseEntity<GetTecnicoDto> asignarIncidencia(@PathVariable Long idTecnico, @PathVariable Long idIncidencia) {
+        return ResponseEntity.ok(GetTecnicoDto.of(tecnicoService.addIncidencia(idTecnico, idIncidencia)));
+    }
+
+
+    @PutMapping("/gestionar-incidencia/{id}")
+    public GetIncidenciaDto gestionarIncidencia(@PathVariable Long id, @RequestBody EditIncidenciaDto editIncidenciaDto) {
+        return GetIncidenciaDto.of(tecnicoService.gestionarIncidencia(id, editIncidenciaDto));
+    }
+
 }
