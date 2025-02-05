@@ -12,6 +12,7 @@ import com.example.startapp.model.Tecnico;
 import com.example.startapp.repo.IncidenciaRepository;
 import com.example.startapp.repo.TecnicoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -82,28 +83,36 @@ public class TecnicoService {
 
     }
 
+    @Transactional
     public Incidencia gestionarIncidencia(Long id, EditIncidenciaDto incidenciaDto) {
-        Optional<Incidencia> optionalIncidencia = incidenciaRepository.findById(id);
+        Optional <Incidencia>  incidenciaOpt = incidenciaRepository.findByIdSimple(id);
 
-        if (optionalIncidencia.isEmpty()) {
-            throw new IncidenciaNotFoundException("No se ha encontrado incidencia con ese id");
+        if (incidenciaOpt.isEmpty()) {
+                throw new IncidenciaNotFoundException("No se ha encontrado incidencia con ese id");
         }
+        Incidencia incidencia = incidenciaOpt.get();
 
-        Incidencia incidenciaEncontrada = optionalIncidencia.get();
+        incidencia.getCategorias().forEach(categoria -> categoria.getSubCategorias().size());
+        incidencia.getCategorias().size();
+        incidencia.getEquipos().size();
+        incidencia.getNotas().size();
+        incidencia.setEstado(incidenciaDto.estado());
 
-        incidenciaEncontrada.setEstado(incidenciaDto.estado());
-
-        if (incidenciaEncontrada.getEstado() == Estado.CERRADA) {
-            incidenciaRepository.delete(incidenciaEncontrada);
+        if (incidencia.getEstado() == Estado.CERRADA) {
+            incidenciaRepository.delete(incidencia);
             return null;
-
         }
-        return incidenciaRepository.save(incidenciaEncontrada);
+
+        // Guardamos la incidencia
+        return incidenciaRepository.save(incidencia);
     }
 
+
+
+
     @Transactional
-    public Tecnico addIncidencia(Long id, Long idIncidencia) {
-        Optional<Tecnico> tecnico = tecnicoRepository.findAllGes(id);
+    public Tecnico addIncidencia(Long idTecnico, Long idIncidencia) {
+        Optional<Tecnico> tecnico = tecnicoRepository.findById(idTecnico);
         Optional<Incidencia> incidencia = incidenciaRepository.findById(idIncidencia);
 
         if (tecnico.isEmpty()) {
@@ -115,9 +124,7 @@ public class TecnicoService {
 
         Tecnico tecnicoEncontrado = tecnico.get();
 
-         // Esto inicializa la colección
 
-        // Añadir la incidencia a la colección
         tecnicoEncontrado.getIncidencias().add(incidencia.get());
 
         return tecnicoRepository.save(tecnicoEncontrado);
