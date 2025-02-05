@@ -113,12 +113,16 @@ public class TecnicoController {
     public ResponseEntity<GetTecnicoDto> saveTecnico(@io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Cuerpo del tecnico", required = true,
             content = @Content(mediaType = "application/json",
-                    schema = @Schema(implementation = Ubicacion.class),
+                    schema = @Schema(implementation = Tecnico.class),
                     examples = @ExampleObject(value = """
                             {
-                                "nombre":"Ubi2"
-                            }
-                            """)))@RequestBody EditTecnicoDto nuevoTecnico) {
+                                   "nombre": "MarÃ­a ",
+                                   "username": "marialopez",
+                                   "email": "maria.lopez@example.com",
+                                   "password": "password456",
+                                   "role": "ADMIN"
+                               }
+                            """))) @RequestBody EditTecnicoDto nuevoTecnico) {
         Tecnico tecnico = tecnicoService.saveTecnico(nuevoTecnico);
         return ResponseEntity.ok(GetTecnicoDto.of(tecnico));
     }
@@ -138,7 +142,19 @@ public class TecnicoController {
                     content = @Content),
     })
     @PutMapping("/{id}")
-    public GetTecnicoDto editTecnico(@PathVariable Long id, @RequestBody EditTecnicoDto editTecnicoDto) {
+    public GetTecnicoDto editTecnico(@PathVariable Long id, @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Cuerpo del tecnico", required = true,
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Tecnico.class),
+                    examples = @ExampleObject(value = """
+                            {
+                                   "nombre": "MarÃ­a ",
+                                   "username": "marialopez54",
+                                   "email": "maria.lopez@example.com",
+                                   "password": "password3456",
+                                   "role": "ADMIN"
+                               }
+                            """)))@RequestBody EditTecnicoDto editTecnicoDto) {
         return GetTecnicoDto.of(tecnicoService.editTecnico(id, editTecnicoDto));
     }
 }
