@@ -31,14 +31,16 @@ public interface IncidenciaRepository extends JpaRepository<Incidencia, Long> {
     equipos,
     notas,
     ubicacion,
-    usuario,tecnico*/
+    usuario,tecnico
     @Query("""
-            SELECT i
-            FROM Incidencia i join fetch Categoria join fetch Equipo join fetch Nota join fetch Ubicacion join fetch Usuario join fetch Tecnico
-        
+            select i
+            from Incidencia i
+             join fetch i.categorias join  i.equipos  join  i.ubicacion join  i.usuario join  i.tecnicos
+
             """)
 
-    List<Incidencia> findAllIncidencias();
+    List<Incidencia> findAllIncidencias();*/
+
 
 
 }

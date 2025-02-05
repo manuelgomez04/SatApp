@@ -52,7 +52,7 @@ public class IncidenciaController {
     })
     @GetMapping
     public List<GetIncidenciaDto> getAll() {
-        return incidenciaService.findAll().stream().map(GetIncidenciaDto::of).toList();
+        return incidenciaService.getAllIncidencias();
     }
 
     @Operation(summary = "Obtener una incidencia por su id")
@@ -75,8 +75,9 @@ public class IncidenciaController {
     })
     @GetMapping("/{id}")
     public GetIncidenciaDto getById(@PathVariable Long id) {
-        return GetIncidenciaDto.of(incidenciaService.findById(id).get());
+        return incidenciaService.findById(id);
     }
+
 
     @PostMapping
     public ResponseEntity<GetIncidenciaDto> saveIncidencia(@RequestBody EditIncidenciaDto incidenciaDto) {

@@ -5,9 +5,7 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Getter
@@ -51,6 +49,10 @@ public class Incidencia {
             fetch = FetchType.LAZY,
             orphanRemoval = true)
     private List<Nota> notas = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "gestionarIncidencias", fetch = FetchType.LAZY)
+    @Setter(AccessLevel.NONE)
+    private Set<Tecnico> tecnicos = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "ubicacion_id", foreignKey = @ForeignKey(name = "fk_incidencia_ubicacion"))
