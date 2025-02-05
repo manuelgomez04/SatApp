@@ -3,6 +3,7 @@ package com.example.startapp.controller;
 import com.example.startapp.dto.*;
 import com.example.startapp.model.Alumno;
 import com.example.startapp.model.Tecnico;
+import com.example.startapp.model.Ubicacion;
 import com.example.startapp.service.TecnicoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -64,7 +65,6 @@ public class TecnicoController {
     }
 
 
-
     @Operation(summary = "Obtiene un técnico por su Id ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
@@ -75,13 +75,13 @@ public class TecnicoController {
                                     value = """
                                             
                                                  {
-                                                               "nombre": "Juan PÃ©rez",
-                                                               "username": "juanperez",
-                                                               "email": "juan.perez@example.com",
-                                                               "password": "password123",
-                                                               "role": "USER"
-                                                               },
-                                             
+                                                    "nombre": "Juan PÃ©rez",
+                                                    "username": "juanperez",
+                                                    "email": "juan.perez@example.com",
+                                                    "password": "password123",
+                                                    "role": "USER"
+                                                 },
+                                            
                                             """
                             )}
                     )}),
@@ -108,7 +108,19 @@ public class TecnicoController {
                     content = @Content),
     })
     @PostMapping
-    public ResponseEntity<GetTecnicoDto> saveTecnico(@RequestBody EditTecnicoDto nuevoTecnico) {
+    public ResponseEntity<GetTecnicoDto> saveTecnico(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Cuerpo del tecnico", required = true,
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Tecnico.class),
+                    examples = @ExampleObject(value = """
+                            {
+                                   "nombre": "MarÃ­a ",
+                                   "username": "marialopez",
+                                   "email": "maria.lopez@example.com",
+                                   "password": "password456",
+                                   "role": "ADMIN"
+                               }
+                            """))) @RequestBody EditTecnicoDto nuevoTecnico) {
         Tecnico tecnico = tecnicoService.saveTecnico(nuevoTecnico);
         return ResponseEntity.ok(GetTecnicoDto.of(tecnico));
     }
@@ -128,7 +140,19 @@ public class TecnicoController {
                     content = @Content),
     })
     @PutMapping("/{id}")
-    public GetTecnicoDto editTecnico(@PathVariable Long id, @RequestBody EditTecnicoDto editTecnicoDto) {
+    public GetTecnicoDto editTecnico(@PathVariable Long id, @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Cuerpo del tecnico", required = true,
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Tecnico.class),
+                    examples = @ExampleObject(value = """
+                            {
+                                    "nombre": "Mar­ado ",
+                                    "username": "marialopez",
+                                    "email": "maria.lopez@example.com",
+                                    "password": "password456",
+                                    "role": "ADMIN"
+                                }
+                            """))) @RequestBody EditTecnicoDto editTecnicoDto) {
         return GetTecnicoDto.of(tecnicoService.editTecnico(id, editTecnicoDto));
     }
 

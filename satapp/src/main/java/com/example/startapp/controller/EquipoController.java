@@ -2,6 +2,7 @@ package com.example.startapp.controller;
 
 import com.example.startapp.dto.*;
 import com.example.startapp.model.Equipo;
+import com.example.startapp.model.Nota;
 import com.example.startapp.model.Ubicacion;
 import com.example.startapp.service.EquipoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,7 +23,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/equipo")
-@Tag(name = "Equipo", description = "Controlador de equipo")
+@Tag(name = "Equipo", description = "Operaciones relacionadas con equipo")
 public class EquipoController {
 
 
@@ -96,7 +97,17 @@ public class EquipoController {
                     content = @Content),
     })
     @PostMapping
-    public ResponseEntity<GetEquipoDto> saveEquipo(@RequestBody GetEquipoDto equipoDto) {
+    public ResponseEntity<GetEquipoDto> saveEquipo(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Cuerpo del equipo", required = true,
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Equipo.class),
+                    examples = @ExampleObject(value = """
+                            {
+                                "nombre": "Televisión",
+                                "caracteristicas": "Car2,Car3",
+                                "ubicacionId": 1
+                            }
+                            """))) @RequestBody GetEquipoDto equipoDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(GetEquipoDto.of(equipoService.saveEquipo(equipoDto)));
     }
 
@@ -115,7 +126,17 @@ public class EquipoController {
                     content = @Content),
     })
     @PutMapping("/{id}")
-    public GetEquipoDto editEquipo(@PathVariable Long id, @RequestBody EditEquipoDto equipoDto) {
+    public GetEquipoDto editEquipo(@PathVariable Long id, @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Cuerpo del equipo", required = true,
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Equipo.class),
+                    examples = @ExampleObject(value = """
+                            {
+                                "nombre": "Mesa",
+                                "caracteristicas": "Car2,Car3",
+                                "ubicacionId":1
+                            }
+                            """))) @RequestBody EditEquipoDto equipoDto) {
         return GetEquipoDto.of(equipoService.editEquipo(id, equipoDto));
     }
 
