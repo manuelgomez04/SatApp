@@ -5,8 +5,10 @@ import com.example.startapp.dto.GetEquipoDto;
 import com.example.startapp.dto.GetUbicacionDto;
 import com.example.startapp.error.EquipoNotFoundException;
 import com.example.startapp.model.Equipo;
+import com.example.startapp.model.Incidencia;
 import com.example.startapp.model.Ubicacion;
 import com.example.startapp.repo.EquipoRepository;
+import com.example.startapp.repo.IncidenciaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +20,8 @@ import java.util.Optional;
 public class EquipoService {
 
     private final EquipoRepository equipoRepository;
-
     private final UbicacionService ubicacionService;
+    private final IncidenciaRepository incidenciaRepository;
 
     public List<Equipo> findAll() {
         List<Equipo> results = equipoRepository.findAll();
@@ -70,7 +72,17 @@ public class EquipoService {
 
     public void deleteEquipo(Long id) {
 
+        Optional<Equipo> equipo = equipoRepository.findById(id);
 
+        if (equipo.isEmpty()) {
+            throw new EquipoNotFoundException("No se ha encontrado el equipo con ese id");
+        }
+
+        List<Incidencia> incidencias = incidenciaRepository.findByEquipoId(id);
+        for (Incidencia incidencia : incidencias) {
+            incidencia.setEquipos(null);
+            incidenciaRepository.save(incidencia);
+        }
 
         equipoRepository.deleteById(id);
     }
