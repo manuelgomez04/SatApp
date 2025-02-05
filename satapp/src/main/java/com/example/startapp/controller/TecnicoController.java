@@ -5,6 +5,7 @@ import com.example.startapp.dto.GetAlumnoDto;
 import com.example.startapp.dto.GetTecnicoDto;
 import com.example.startapp.model.Alumno;
 import com.example.startapp.model.Tecnico;
+import com.example.startapp.model.Ubicacion;
 import com.example.startapp.service.TecnicoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -66,7 +67,6 @@ public class TecnicoController {
     }
 
 
-
     @Operation(summary = "Obtiene un técnico por su Id ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
@@ -77,13 +77,13 @@ public class TecnicoController {
                                     value = """
                                             
                                                  {
-                                                               "nombre": "Juan PÃ©rez",
-                                                               "username": "juanperez",
-                                                               "email": "juan.perez@example.com",
-                                                               "password": "password123",
-                                                               "role": "USER"
-                                                               },
-                                             
+                                                    "nombre": "Juan PÃ©rez",
+                                                    "username": "juanperez",
+                                                    "email": "juan.perez@example.com",
+                                                    "password": "password123",
+                                                    "role": "USER"
+                                                 },
+                                            
                                             """
                             )}
                     )}),
@@ -110,7 +110,15 @@ public class TecnicoController {
                     content = @Content),
     })
     @PostMapping
-    public ResponseEntity<GetTecnicoDto> saveTecnico(@RequestBody EditTecnicoDto nuevoTecnico) {
+    public ResponseEntity<GetTecnicoDto> saveTecnico(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Cuerpo del tecnico", required = true,
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Ubicacion.class),
+                    examples = @ExampleObject(value = """
+                            {
+                                "nombre":"Ubi2"
+                            }
+                            """)))@RequestBody EditTecnicoDto nuevoTecnico) {
         Tecnico tecnico = tecnicoService.saveTecnico(nuevoTecnico);
         return ResponseEntity.ok(GetTecnicoDto.of(tecnico));
     }

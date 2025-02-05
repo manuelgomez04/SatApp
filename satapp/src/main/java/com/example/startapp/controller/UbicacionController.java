@@ -38,7 +38,7 @@ public class UbicacionController {
                             examples = {@ExampleObject(
                                     value = """
                                             [
-                                         
+                                            
                                                     {
                                                         "nombre": "Aula 1ºDAM"
                                                     },
@@ -95,7 +95,15 @@ public class UbicacionController {
                     content = @Content),
     })
     @PostMapping
-    public ResponseEntity<GetUbicacionDto> saveUbicacion(@RequestBody GetUbicacionDto nuevo) {
+    public ResponseEntity<GetUbicacionDto> saveUbicacion(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Cuerpo de la ubicación", required = true,
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Ubicacion.class),
+                    examples = @ExampleObject(value = """
+                            {
+                                "nombre":"Ubi2"
+                            }
+                            """))) @RequestBody GetUbicacionDto nuevo) {
         return ResponseEntity.status(HttpStatus.CREATED).body(GetUbicacionDto.of(ubicacionService.saveUbicacion(nuevo)));
     }
 
