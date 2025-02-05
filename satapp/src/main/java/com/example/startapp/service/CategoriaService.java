@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CategoriaService {
 
     private final CategoriaRepository categoriaRepository;

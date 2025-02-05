@@ -7,6 +7,8 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.*;
 import org.hibernate.proxy.HibernateProxy;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -33,6 +35,11 @@ public class Usuario {
     private String role;
     private Boolean deleted = Boolean.FALSE;
 
+    @OneToMany(mappedBy = "usuario", orphanRemoval = true, fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    private List<Incidencia> incidencias = new ArrayList<>();
 
     @Override
     public final boolean equals(Object o) {
