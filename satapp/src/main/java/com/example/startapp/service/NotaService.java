@@ -83,17 +83,4 @@ public class NotaService {
         return nota.get();
     }
 
-
-    @Transactional
-    public void removeNota(Long notaId, Long incidenciaId) {
-        Optional<Incidencia> incidencia = incidenciaRepository.findById(incidenciaId);
-
-        if (incidencia.isEmpty()) {
-            throw new IncidenciaNotFoundException("No se ha encontrado la incidencia");
-        }
-
-        incidencia.get().removeNota(findNotaById(notaId));
-        incidenciaRepository.save(incidencia.get());
-    }
-    
 }

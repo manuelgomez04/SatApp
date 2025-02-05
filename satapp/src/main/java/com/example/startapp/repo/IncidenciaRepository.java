@@ -1,5 +1,8 @@
 package com.example.startapp.repo;
 
+import com.example.startapp.dto.*;
+import com.example.startapp.model.Categoria;
+
 import com.example.startapp.model.Equipo;
 import com.example.startapp.model.Incidencia;
 import com.example.startapp.model.Nota;
@@ -15,9 +18,9 @@ public interface IncidenciaRepository extends JpaRepository<Incidencia, Long> {
 
 
     @Query("""
-        select n
-        from Incidencia i join i.notas n
-        """)
+            select n
+            from Incidencia i join i.notas n
+            """)
     List<Nota> findAllNotas();
 
     @Query("""
@@ -28,10 +31,18 @@ public interface IncidenciaRepository extends JpaRepository<Incidencia, Long> {
     Optional<Nota> findByIdNota(Long id);
 
     @Query("""
-        SELECT i 
-        FROM Incidencia i 
-        WHERE i.ubicacion.id = ?1
+        select i 
+        from Incidencia i 
+        where i.ubicacion.id = ?1
         """)
     List<Incidencia> findByUbicacionId(Long ubicacionId);
+
+    @Query("""
+        select i 
+        from Incidencia i join i.equipos e
+        where e.id = ?1
+        """)
+    List<Incidencia> findByEquipoId(Long equipoId);
+
 
 }

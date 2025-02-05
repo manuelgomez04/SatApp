@@ -125,25 +125,4 @@ public class NotasController {
     public GetNotaDto editNota(@PathVariable Long notaId, @RequestBody EditNotaDto nota) {
         return GetNotaDto.of(notaService.editNota(notaId, nota));
     }
-
-
-    @Operation(summary = "Borra una nota")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Se ha eliminado la nota",
-                    content = {@Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = Nota.class)),
-                            examples = {@ExampleObject(
-
-                            )}
-                    )}),
-            @ApiResponse(responseCode = "404",
-                    description = "No se ha encontrado ningúna nota",
-                    content = @Content),
-    })
-    @DeleteMapping("/{notaId}/{incidenciaId}")
-    public ResponseEntity<?> deleteNota(@PathVariable Long notaId, @PathVariable Long incidenciaId) {
-        notaService.removeNota(notaId, incidenciaId);
-        return ResponseEntity.noContent().build();
-    }
 }

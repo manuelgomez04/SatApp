@@ -15,12 +15,6 @@ INSERT INTO usuario (id, nombre, username, password, email, role, deleted) value
 INSERT INTO usuario (id, nombre, username, password, email, role, deleted) values (nextval('usuario_seq'), 'María aaaa', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN', true);
 INSERT INTO usuario (id, nombre, username, password, email, role, deleted) values (nextval('usuario_seq'), 'Juan Pérez', 'juanperez', 'password123', 'juan.perez@example.com', 'USER', false);
 
-
-
-
-
-
-
 INSERT INTO alumno (id) values (1);
 INSERT INTO tecnico (id) values (51);
 INSERT INTO personal (id, tipo) values (101, 'PROFESOR');
@@ -37,14 +31,16 @@ insert into categoria(id,nombre, categoria_padre_id) values (nextval('categoria_
 
 
 insert into incidencia(id,fecha,titulo,descripcion,estado,urgencia,ubicacion_id) values(nextval('incidencia_seq'),'1943-02-10','Rotura','Se ha roto algo no se sabe el que','ABIERTA',true,101);
-insert into incidencia(id,fecha,titulo,descripcion,estado,urgencia,ubicacion_id) values(nextval('incidencia_seq'),'2024-02-10','Electricidad','Falla el cuadro electrico','PENDIENTE',false,51);
-insert into incidencia(id,fecha,titulo,descripcion,estado,urgencia,ubicacion_id) values(nextval('incidencia_seq'),'2024-02-10','Ordenador roto','Se ha roto el ordenador','PENDIENTE',false,1);
+insert into incidencia(id,fecha,titulo,descripcion,estado,urgencia,ubicacion_id,usuario_id) values(nextval('incidencia_seq'),'2024-02-10','Electricidad','Falla el cuadro electrico','PENDIENTE',false,51,1);
+insert into incidencia(id,fecha,titulo,descripcion,estado,urgencia,ubicacion_id, usuario_id) values(nextval('incidencia_seq'),'2024-02-10','Ordenador roto','Se ha roto el ordenador','PENDIENTE',false,1,1);
 
 insert into incidencia_equipos(equipos_id,incidencia_id) values(51,51);
 insert into incidencia_equipos(equipos_id,incidencia_id) values(101,51);
 
 insert into incidencia_categorias(incidencia_id,categorias_id) values (currval('incidencia_seq'),1);
 insert into incidencia_categorias(incidencia_id,categorias_id) values (currval('incidencia_seq'),51);
+
+insert into tecnico_gestionar_incidencias(tecnicos_id,gestionar_incidencias_id) values(51,51);
 
 insert into nota(id,contenido,autor,fecha,incidencia_id) values (nextval('nota_seq'), 'AAAAAAAAB','Jose','2025-01-29',currval('incidencia_seq'));
 insert into nota(id,contenido,autor,fecha,incidencia_id) values (nextval('nota_seq'), 'AAAAAAAAB','Pepe','2025-01-29',currval('incidencia_seq'));
