@@ -156,14 +156,50 @@ public class TecnicoController {
         return GetTecnicoDto.of(tecnicoService.editTecnico(id, editTecnicoDto));
     }
 
+
+    @Operation(summary = "Asigna un técnico por su id a una incidencia por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha asignado el técnico",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetTecnicoDto.class)),
+                            examples = {@ExampleObject(
+
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado ningun técnico",
+                    content = @Content),
+    })
     @PutMapping("/{idTecnico}/asignar/{idIncidencia}")
     public ResponseEntity<GetTecnicoDto> asignarIncidencia(@PathVariable Long idTecnico, @PathVariable Long idIncidencia) {
         return ResponseEntity.ok(GetTecnicoDto.of(tecnicoService.addIncidencia(idTecnico, idIncidencia)));
     }
 
+    @Operation(summary = "Gestionar una incidencia por su id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha asignado el técnico",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetTecnicoDto.class)),
+                            examples = {@ExampleObject(
 
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado ningun técnico",
+                    content = @Content),
+    })
     @PutMapping("/gestionar-incidencia/{id}")
-    public GetIncidenciaDto gestionarIncidencia(@PathVariable Long id, @RequestBody EditIncidenciaDto editIncidenciaDto) {
+    public GetIncidenciaDto gestionarIncidencia(@PathVariable Long id, @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Cuerpo del tecnico", required = true,
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Tecnico.class),
+                    examples = @ExampleObject(value = """
+                            {
+                                "estado": "TRABAJANDO"
+                            }
+                            """))) @RequestBody EditIncidenciaDto editIncidenciaDto) {
         return GetIncidenciaDto.of(tecnicoService.gestionarIncidencia(id, editIncidenciaDto));
     }
 
