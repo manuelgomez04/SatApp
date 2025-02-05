@@ -11,9 +11,9 @@ public record EditIncidenciaDto(
         String descripcion,
         Estado estado,
         Boolean urgencia,
-        List<Categoria> categorias,
-        List<Equipo> equipos,
-        List<Nota> notas,
+        List<Long> categorias,
+        List<Long> equipos,
+        List<Long> notas,
         Ubicacion ubicacion,
         Usuario usuario
 ) {

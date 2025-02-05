@@ -1,9 +1,13 @@
 package com.example.startapp.controller;
 
 import com.example.startapp.dto.EditIncidenciaDto;
+import com.example.startapp.dto.GetAlumnoDto;
 import com.example.startapp.dto.GetIncidenciaDto;
 import com.example.startapp.dto.GetUbicacionDto;
+import com.example.startapp.model.Incidencia;
+import com.example.startapp.model.Usuario;
 import com.example.startapp.service.IncidenciaService;
+import com.example.startapp.service.TecnicoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -24,6 +28,7 @@ import java.util.List;
 public class IncidenciaController {
 
     private final IncidenciaService incidenciaService;
+    private final TecnicoService tecnicoService;
 
 
     @Operation(summary = "Obtiene todas las incidencias")
@@ -35,7 +40,7 @@ public class IncidenciaController {
                             examples = {@ExampleObject(
                                     value = """
                                             [
-                                         
+                                            
                                                     {
                                                         "nombre": "Aula 1ºDAM"
                                                     },
@@ -79,8 +84,41 @@ public class IncidenciaController {
     }
 
 
+
+    @Operation(summary = "Crea un nuevo historico de curso para un alumno")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201",
+                    description = "Se ha creado el historico de curso",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetIncidenciaDto.class)),
+                            examples = {@ExampleObject(
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "400",
+                    description = "No se ha creado un historico de curso",
+                    content = @Content),
+    })
     @PostMapping
     public ResponseEntity<GetIncidenciaDto> saveIncidencia(@RequestBody EditIncidenciaDto incidenciaDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(GetIncidenciaDto.of(incidenciaService.abrirIncidencia(incidenciaDto)));
     }
+
+    @Operation(summary = "Borra un usuario buscado por id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Se ha eliminado el usuario",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = Incidencia.class)),
+                            examples = {@ExampleObject(
+
+                            )}
+                    )}),
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteIncidencia(@PathVariable Long id) {
+        incidenciaService.deleteIncidencia(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
 }

@@ -6,6 +6,7 @@ import com.example.startapp.model.Incidencia;
 import com.example.startapp.model.Nota;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,20 +27,7 @@ public interface IncidenciaRepository extends JpaRepository<Incidencia, Long> {
             where n.id = ?1
             """)
     Optional<Nota> findByIdNota(Long id);
-/*
-    categorias,
-    equipos,
-    notas,
-    ubicacion,
-    usuario,tecnico
-    @Query("""
-            select i
-            from Incidencia i
-             join fetch i.categorias join  i.equipos  join  i.ubicacion join  i.usuario join  i.tecnicos
 
-            """)
-
-    List<Incidencia> findAllIncidencias();*/
 
 
 

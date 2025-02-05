@@ -2,6 +2,9 @@ package com.example.startapp.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
@@ -14,6 +17,8 @@ import java.util.*;
 @NoArgsConstructor
 @ToString
 @Builder
+@SQLDelete(sql = "UPDATE incidencia SET deleted = true WHERE id = ?")
+@FilterDef(name = "deletedIncidenciaService", parameters = @ParamDef(name = "isDeleted", type = Boolean.class))
 public class Incidencia {
 
     @Id
@@ -31,14 +36,14 @@ public class Incidencia {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Builder.Default
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Categoria> categorias = new ArrayList<>();
 
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Builder.Default
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Equipo> equipos = new ArrayList<>();
 
     @ToString.Exclude
@@ -62,6 +67,8 @@ public class Incidencia {
     @JoinColumn(name = "usuario_id", foreignKey = @ForeignKey(name = "fk_incidencia_usuario"))
     private Usuario usuario;
 
+    @Column(name = "deleted")
+    private Boolean deleted = Boolean.FALSE;
 
     //Helpers nota
     public void addNota(Nota nota) {
@@ -72,6 +79,15 @@ public class Incidencia {
     public void removeNota(Nota nota) {
         notas.remove(nota);
 
+    }
+
+    public void addCategoria(Categoria categoria) {
+        categorias.add(categoria);
+
+    }
+
+    public void removeCategoria(Categoria categoria) {
+        categorias.remove(categoria);
     }
 
     @Override

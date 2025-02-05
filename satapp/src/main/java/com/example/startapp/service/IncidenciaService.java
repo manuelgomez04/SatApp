@@ -1,14 +1,11 @@
 package com.example.startapp.service;
 
 import com.example.startapp.dto.EditIncidenciaDto;
+import com.example.startapp.dto.GetCategoriaDto;
 import com.example.startapp.dto.GetIncidenciaDto;
-import com.example.startapp.error.IncidenciaNotFoundException;
-import com.example.startapp.error.NotaNotFoundException;
+import com.example.startapp.error.*;
 import com.example.startapp.model.*;
-import com.example.startapp.repo.CategoriaRepository;
-import com.example.startapp.repo.IncidenciaRepository;
-import com.example.startapp.repo.UbicacionRepository;
-import com.example.startapp.repo.UsuarioRepository;
+import com.example.startapp.repo.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,11 +24,12 @@ public class IncidenciaService {
     private final UsuarioRepository usuarioRepository;
     private final UbicacionRepository ubicacionRepository;
     private final CategoriaRepository categoriaRepository;
+    private final EquipoRepository equipoRepository;
 
-    @org.springframework.transaction.annotation.Transactional(readOnly = true) // Esto evita problemas con FetchType.LAZY
+    @org.springframework.transaction.annotation.Transactional(readOnly = true)
     public List<GetIncidenciaDto> getAllIncidencias() {
 
-        List <GetIncidenciaDto> incidencias = incidenciaRepository.findAll()
+        List<GetIncidenciaDto> incidencias = incidenciaRepository.findAll()
                 .stream()
                 .map(GetIncidenciaDto::of)
                 .collect(Collectors.toList());
@@ -46,7 +44,7 @@ public class IncidenciaService {
 
 
     public GetIncidenciaDto findById(Long id) {
-         Optional <Incidencia> incidencia =incidenciaRepository.findById(id);
+        Optional<Incidencia> incidencia = incidenciaRepository.findById(id);
 
         if (incidencia.isEmpty()) {
             throw new IncidenciaNotFoundException("No se ha encontrado una nota con ese id");
@@ -57,59 +55,87 @@ public class IncidenciaService {
     }
 
 
+    @Transactional
     public Incidencia abrirIncidencia(EditIncidenciaDto getIncidenciaDto) {
 
-        // 1️⃣ Guardar Ubicación si es nueva
-        Ubicacion ubicacion = getIncidenciaDto.ubicacion();
-        if (ubicacion != null && ubicacion.getId() == null) {
-            ubicacion = ubicacionRepository.save(ubicacion);
+
+        Ubicacion ubicacion = null;
+        if (getIncidenciaDto.ubicacion() != null) {
+            Optional<Ubicacion> ubicacionOpt = ubicacionRepository.findById(getIncidenciaDto.ubicacion().getId());
+            if (ubicacionOpt.isPresent()) {
+                ubicacion = ubicacionOpt.get();
+            } else {
+                throw new UbicacionNotFoundException("Ubicación no encontrada con ID: " + getIncidenciaDto.ubicacion());
+            }
         }
 
-        // 2️⃣ Guardar Usuario si es nuevo
-        Usuario usuario = getIncidenciaDto.usuario();
-        if (usuario != null && usuario.getId() == null) {
-            usuario = usuarioRepository.save(usuario);
+
+        Usuario usuario = null;
+        if (getIncidenciaDto.usuario() != null) {
+            Optional<Usuario> usuarioOpt = usuarioRepository.findById(getIncidenciaDto.usuario().getId());
+            if (usuarioOpt.isPresent()) {
+                usuario = usuarioOpt.get();
+            } else {
+                throw new UsuarioNotFoundException("Usuario no encontrado con ID: " + getIncidenciaDto.usuario());
+            }
         }
 
-        // 3️⃣ Asociar categorías correctamente
+
         List<Categoria> categorias = new ArrayList<>();
         if (getIncidenciaDto.categorias() != null) {
-            for (Categoria c : getIncidenciaDto.categorias()) {
-                if (c.getId() != null) {
-                    // Si la categoría ya tiene un ID, buscamos en la BD para evitar el error
-                    Categoria categoriaExistente = categoriaRepository.findById(c.getId())
-                            .orElseThrow(() -> new RuntimeException("Categoría no encontrada con ID: " + c.getId()));
-                    categorias.add(categoriaExistente);
+            for (Long categoriaId : getIncidenciaDto.categorias()) {
+                Optional<Categoria> categoriaOpt = categoriaRepository.findByIdCat(categoriaId);
+                if (categoriaOpt.isPresent()) {
+                    categorias.add(categoriaOpt.get());
                 } else {
-                    // Si no tiene ID, es nueva y la guardamos
-                    categorias.add(categoriaRepository.save(c));
+                    throw new CategoriaNotFoundException("Categoría no encontrada con ID: " + categoriaId);
                 }
             }
         }
 
-        // 4️⃣ Crear la Incidencia sin notas
+
+        List<Equipo> equipos = new ArrayList<>();
+        if (getIncidenciaDto.equipos() != null) {
+            for (Long equipoId : getIncidenciaDto.equipos()) {
+                Optional<Equipo> equipoOpt = equipoRepository.findById(equipoId);
+                if (equipoOpt.isPresent()) {
+                    equipos.add(equipoOpt.get());
+                } else {
+                    throw new EquipoNotFoundException("Equipo no encontrado con ID: " + equipoId);
+                }
+            }
+        }
+
+
         Incidencia incidencia = Incidencia.builder()
                 .fecha(getIncidenciaDto.fecha())
                 .titulo(getIncidenciaDto.titulo())
                 .descripcion(getIncidenciaDto.descripcion())
                 .estado(getIncidenciaDto.estado())
                 .urgencia(getIncidenciaDto.urgencia())
-                .categorias(categorias) // Ahora sí, bien asociadas
+                .categorias(categorias)
+                .equipos(equipos)
                 .ubicacion(ubicacion)
                 .usuario(usuario)
                 .build();
 
-        // 5️⃣ Agregar las Notas con el helper
+        List<Nota> notas = new ArrayList<>();
         if (getIncidenciaDto.notas() != null) {
-            for (Nota nota : getIncidenciaDto.notas()) {
-                if (nota != null) {
-                    incidencia.addNota(nota);
+            for (Long notaId : getIncidenciaDto.notas()) {
+                Optional<Nota> notaOpt = incidenciaRepository.findByIdNota(notaId);
+                if (notaOpt.isPresent()) {
+                    notas.add(notaOpt.get());
+                } else {
+                    throw new NotaNotFoundException("Nota no encontrada con ID: " + notaId);
                 }
             }
         }
-
-        // 6️⃣ Guardamos y retornamos la incidencia con sus asociaciones correctas
         return incidenciaRepository.save(incidencia);
+    }
+
+
+    public void deleteIncidencia(Long id) {
+        incidenciaRepository.deleteById(id);
     }
 
 
