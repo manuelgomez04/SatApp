@@ -14,5 +14,5 @@ public interface TecnicoRepository extends JpaRepository<Tecnico, Long> {
             join fetch t.gestionarIncidencias
             where t.id = :id
             """)
-    Optional<Tecnico> findAllGes(@Param("id") Long id);
+    Optional<Tecnico> findAllGes(Long id);
 }
