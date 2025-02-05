@@ -65,6 +65,37 @@ public class TecnicoController {
         return tecnicoService.getAllTecnicos().stream().map(GetTecnicoDto::of).toList();
     }
 
+
+
+    @Operation(summary = "Obtiene un técnico por su Id ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha encontrado el técnico buscado",
+                    content = {@Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetTecnicoDto.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                            
+                                                 {
+                                                               "nombre": "Juan PÃ©rez",
+                                                               "username": "juanperez",
+                                                               "email": "juan.perez@example.com",
+                                                               "password": "password123",
+                                                               "role": "USER"
+                                                               },
+                                             
+                                            """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado el alumno",
+                    content = @Content),
+    })
+    @GetMapping("/{id}")
+    public GetTecnicoDto getTecnico(@PathVariable Long id) {
+        return GetTecnicoDto.of(tecnicoService.getTecnicoById(id));
+    }
+
     @Operation(summary = "Crea un nuevo técnico")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",

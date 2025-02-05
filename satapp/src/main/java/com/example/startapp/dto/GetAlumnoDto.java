@@ -22,7 +22,6 @@ public record GetAlumnoDto(
                 alumno.getPassword(),
                 alumno.getRole(),
                 alumno.getHistoricoCursos().stream().map(GetHistoricoDto::of).toList()
-
         );
     }
 }
