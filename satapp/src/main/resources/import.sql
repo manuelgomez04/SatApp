@@ -15,12 +15,6 @@ INSERT INTO usuario (id, nombre, username, password, email, role, deleted) value
 INSERT INTO usuario (id, nombre, username, password, email, role, deleted) values (nextval('usuario_seq'), 'María aaaa', 'marialopez', 'password456', 'maria.lopez@example.com', 'ADMIN', true);
 INSERT INTO usuario (id, nombre, username, password, email, role, deleted) values (nextval('usuario_seq'), 'Juan Pérez', 'juanperez', 'password123', 'juan.perez@example.com', 'USER', false);
 
-
-
-
-
-
-
 INSERT INTO alumno (id) values (1);
 INSERT INTO tecnico (id) values (51);
 INSERT INTO personal (id, tipo) values (101, 'PROFESOR');
