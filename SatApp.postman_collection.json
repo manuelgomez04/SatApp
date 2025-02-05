@@ -1,0 +1,902 @@
+{
+	"info": {
+		"_postman_id": "9a7a4f04-5b83-4c55-b659-acb1a56e1642",
+		"name": "SatApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38617657",
+		"_collection_link": "https://startapp-1286.postman.co/workspace/StartApp-Workspace~b2346c9c-24f4-4b28-b403-f1f7c9fc25d7/collection/38617630-9a7a4f04-5b83-4c55-b659-acb1a56e1642?action=share&source=collection_link&creator=38617657"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "GetAllUsuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/usuario",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUsuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/usuario/1",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Personal",
+			"item": [
+				{
+					"name": "GetAllPersonal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/personal",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"personal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddPersonal",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nombre\": \"Maaaaaaaaaaaaaa­a l\",\r\n        \"username\": \"marialopez\",\r\n        \"email\": \"maria.lopez@example.com\",\r\n        \"password\": \"password456\",\r\n        \"role\": \"ADMIN\",\r\n        \"tipo\": \"PROFESOR\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/personal",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"personal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditPersonal",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nombre\": \"MarÃ­a l\",\r\n        \"username\": \"marialopez\",\r\n        \"email\": \"maria.lopez@example.com\",\r\n        \"password\": \"password456\",\r\n        \"role\": \"ADMIN\",\r\n        \"tipo\": \"PAS\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/personal/101",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"personal",
+								"101"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPersonalById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/personal/101",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"personal",
+								"101"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tecnico",
+			"item": [
+				{
+					"name": "GetAllTecnicos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/tecnico",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"tecnico"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddTecnico",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"nombre\": \"MarÃ­a \",\r\n        \"username\": \"marialopez\",\r\n        \"email\": \"maria.lopez@example.com\",\r\n        \"password\": \"password456\",\r\n        \"role\": \"ADMIN\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/tecnico",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"tecnico"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditTecnico",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nombre\": \"Mar­ado \",\r\n        \"username\": \"marialopez\",\r\n        \"email\": \"maria.lopez@example.com\",\r\n        \"password\": \"password456\",\r\n        \"role\": \"ADMIN\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/tecnico/51",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"tecnico",
+								"51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTecnicoById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/tecnico/51",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"tecnico",
+								"51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddIncidenciaToTecnico",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/tecnico/51/asignar/51",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"tecnico",
+								"51",
+								"asignar",
+								"51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gestionarIncidencia",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"estado\": \"ABIERTA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/tecnico/gestionar-incidencia/101",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"tecnico",
+								"gestionar-incidencia",
+								"101"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Alumno",
+			"item": [
+				{
+					"name": "GetAllAumnos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/alumno",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"alumno"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddHistoricoCurso",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"curso\": \"1º Bach\",\r\n    \"cursoEscolar\": \"2023-2024\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/alumno/251/historico",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"alumno",
+								"251",
+								"historico"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddAlumno",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Juan \",\r\n    \"username\": \"juanperez\",\r\n    \"password\": \"password123\",\r\n    \"email\": \"juan.perez@example.com\",\r\n    \"role\": \"USER\",\r\n    \"historicoCursos\": [\r\n        {\r\n            \"curso\": \"1º Bach\",\r\n            \"cursoEscolar\": \"2023-2024\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/alumno",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"alumno"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditAlumno",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Juan Prez\",\r\n    \"username\": \"juanperezzfaksdhfalkjshdfaslkhkhdz\",\r\n    \"email\": \"juan.perez@example.com\",\r\n    \"password\": \"password123456789\",\r\n    \"role\": \"USER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/alumno/251",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"alumno",
+								"251"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindAlumnoById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/alumno/1",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"alumno",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notas",
+			"item": [
+				{
+					"name": "GetAllNotas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/nota/",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"nota",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetNotaById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/nota/1",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"nota",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveNota",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fecha\": \"2025-01-29\",\r\n    \"contenido\": \"ejemplo\",\r\n    \"autor\": \"Jose\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/nota/51",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"nota",
+								"51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditarNota",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"incidenciaId\": 51,\r\n    \"fecha\": \"2025-01-29\",\r\n    \"contenido\": \"AAAAAAAAB\",\r\n    \"autor\": \"Jose1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/nota/1",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"nota",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "GetAllCategorias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/categoria",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"categoria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddCategoria",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"CATEGORIA035\",\r\n    \"subCategorias\": [],\r\n    \"categoriaPadre\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/categoria",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"categoria"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditCategoria",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"CATEGORIA03405054215\",\r\n    \"subCategorias\": [\r\n        {\r\n            \"id\": 101\r\n        }\r\n    ],\r\n    \"categoriaPadre\": {\r\n        \"id\": 51\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/categoria/151",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"categoria",
+								"151"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCategoríaId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/categoria/51",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"categoria",
+								"51"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ubicacion",
+			"item": [
+				{
+					"name": "FindAllUbicacion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/ubicacion",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"ubicacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/ubicacion/1",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"ubicacion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveUbi",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\":\"Ubi2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/ubicacion",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"ubicacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUbicacion",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/ubicacion/1",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"ubicacion",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Equipo",
+			"item": [
+				{
+					"name": "GetAllEquipo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/equipo",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"equipo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetEquipoById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/equipo/51",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"equipo",
+								"51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveEquipo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Televisión\",\r\n    \"caracteristicas\": \"Car2,Car3\",\r\n    \"ubicacionId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/equipo",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"equipo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EditEquipo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Mesa\",\r\n    \"caracteristicas\": \"Car2,Car3\",\r\n    \"ubicacionId\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/equipo/51",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"equipo",
+								"51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEquipo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/equipo/1",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"equipo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Incidencia",
+			"item": [
+				{
+					"name": "GetAllIncidencias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/incidencia",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"incidencia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetIncidenciaById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/incidencia/51",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"incidencia",
+								"51"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddIncidencia",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"fecha\": \"1943-02-10\",\r\n        \"titulo\": \"Rotura\",\r\n        \"descripcion\": \"Se ha roto algo no se sabe el que\",\r\n        \"estado\": \"ABIERTA\",\r\n        \"urgencia\": true,\r\n        \"categorias\": [\r\n            52\r\n        ],\r\n        \"equipos\": [\r\n           102\r\n        ],\r\n        \"notas\": [\r\n           \r\n        ],\r\n        \"ubicacion\": {\r\n           \"id\":1\r\n        },\r\n        \"usuario\": null\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{initial_route}}/incidencia",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"incidencia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteIncidencia",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{initial_route}}/incidencia/1",
+							"host": [
+								"{{initial_route}}"
+							],
+							"path": [
+								"incidencia",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "initial_route",
+			"value": "localhost:8080",
+			"type": "string"
+		}
+	]
+}
