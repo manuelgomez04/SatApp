@@ -38,7 +38,7 @@ public class SecurityConfig {
         http.csrf(csfr -> csfr.disable());
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers(HttpMethod.POST, "/incidencia").hasAnyRole()
-                .requestMatchers(HttpMethod.POST, "/alumno").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/alumno/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/tecnico").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/categoria").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/equipo").hasRole("ADMIN")
